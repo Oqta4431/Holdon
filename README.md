@@ -79,7 +79,8 @@ Holdonでは購入の判断を遅らせることによって時間を取り、�
 
 ## ER図
 ### ER図
-[![Image from Gyazo](https://i.gyazo.com/2942ad7e01e1ea7d0a226352e659e98f.png)](https://gyazo.com/2942ad7e01e1ea7d0a226352e659e98f)
+[![Image from Gyazo](https://i.gyazo.com/e27b259261d50e424bdff36cbd405925.png)](https://gyazo.com/e27b259261d50e424bdff36cbd405925)
+
 
 ### 本サービスの概要（700文字以内）
 本サービスは、衝動買いを防ぐために「立ち止まって考える習慣」をつくる自己管理アプリです。欲しいと思った瞬間に商品を登録し、時間をおいて再考することで、勢いで買って後悔する行動を減らし、より納得感のある選択につなげます。目的は節約よりも、「自分にとって本当に必要な買い物か」を意識的に判断できるようになることです。衝動買いの多くは代用品の存在や価格比較不足、熱の冷めやすさなど、判断の瞬間に冷静さを欠くことが原因です。本アプリはその前に一度立ち止まるきっかけを提供し、後悔の少ない意思決定を支援します。
@@ -97,52 +98,52 @@ MVPでは、ユーザー登録、欲しい物の登録、リマインド設定�
 
 ### テーブル詳細
 #### usersテーブル（ユーザー情報）
-- id：主キー
-- name：ユーザーの表示名（山田太郎）
-- email：ログイン認証、メール通知で使用。ユニーク制約 （例：taro@gmail.com）
-- encrypted_password：Deviseがハッシュ化したログイン用パスワード（例：$2a$12$xxxx...）
-- created_at：レコード作成日時
-- updated_at：レコード更新日時
+- id (int)：主キー
+- name (string)：ユーザーの表示名（山田太郎）
+- email (string)：ログイン認証、メール通知で使用。ユニーク制約 （例：taro@gmail.com）
+- encrypted_password (string)：Deviseがハッシュ化したログイン用パスワード（例：$2a$12$xxxx...）
+- created_at (datetime)：レコード作成日時
+- updated_at (datetime)：レコード更新日時
 
 #### social_accounts(Google認証とLINE認証を1つのユーザーに紐づけるためのテーブル)
-- id：主キー
-- user_id：ユーザーID/外部キー
-- provider：ログインチャネル（google/line）
-- uid：各プロバイダ側でのID（例：taro@gmail.com）
-- created_at：レコード作成日時
-- updated_at：レコード更新日時
+- id (int)：主キー
+- user_id (int)：ユーザーID/外部キー
+- provider (string)：ログインチャネル（google/line）
+- uid (string)：各プロバイダ側でのID（例：taro@gmail.com）
+- created_at (datetime)：レコード作成日時
+- updated_at (datetime)：レコード更新日時
 
 #### items（商品に紐づく様々な情報）
-- id：主キー
+- id (int)：主キー
 
 [商品登録]
-- user_id：ユーザーID/外部キー（users.id）
-- name：商品名（例：macbook） 
-- price：値段（例：150,000）
-- url：ECサイト等での商品ページのURL（https://example.com）
-- image：スクリーンショット等の画像
-- category：カテゴリー（例：ガジェット）
-- memo：登録時のメモ（例：店舗名等）
+- user_id (int)：ユーザーID/外部キー（users.id）
+- name (string)：商品名（例：macbook） 
+- price (int)：値段（例：150,000）
+- url (string)：ECサイト等での商品ページのURL（https://example.com）
+- image (string)：スクリーンショット等の画像
+- category (string)：カテゴリー（例：ガジェット）
+- memo (text)：登録時のメモ（例：店舗名等）
 
 [2カラムメモ]
-- pros：購入する理由（例：airdropが便利、airpodsが接続できる）
-- cons：見送る理由（例：windowsのほうが安い、macでなければならない理由がない）
+- pros (text)：購入する理由（例：airdropが便利、airpodsが接続できる）
+- cons (text)：見送る理由（例：windowsのほうが安い、macでなければならない理由がない）
 
 [リマインド]
-- remind_at：リマインドを行う日時（例：登録日の翌日9時）
-- next_remind：「再検討」にした場合の次回のリマインド日時（remind_atの日付の翌日9時）
+- remind_at (datetime)：リマインドを行う日時（例：登録日の翌日9時）
+- next_remind_at (datetime)：「再検討」にした場合の次回のリマインド日時（remind_atの日付の翌日9時）
 
 [購入判断]
-- status：商品の購入判断の状態（例：considering/purchased/skipped）
-- decided_at：購入判断をした日時
+- status (string)：商品の購入判断の状態（例：considering/purchased/skipped）
+- decided_at (datetime)：購入判断をした日時
 
 [判断レビュー]
-- evaluation：判断に対しての満足度（1~5段階評価）
-- decision_comment：判断に対するレビュー
+- evaluation (int)：判断に対しての満足度（1~5段階評価）
+- decision_comment (text)：判断に対するレビュー
 
 [タイムスタンプ]
-- created_at：レコード作成日時
-- updated_at：レコード更新日時
+- created_at (datetime)：レコード作成日時
+- updated_at (datetime)：レコード更新日時
 
 ### ER図の注意点
 - [x] プルリクエストに最新のER図のスクリーンショットを画像が表示される形で掲載できているか？

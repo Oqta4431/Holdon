@@ -74,29 +74,8 @@ Holdonでは購入の判断を遅らせることによって時間を取り、�
 
 
 ## 画面遷移図
-Figma：https://www.figma.com/design/2iEox6s22yDFKkAWskfEWF/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_Holdon%EF%BC%88%E4%BB%AE%EF%BC%89?node-id=0-1&p=f&t=6phUyl9iC1zHVESt-0
+[Figmaで見る](https://www.figma.com/design/2iEox6s22yDFKkAWskfEWF/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C_Holdon%EF%BC%88%E4%BB%AE%EF%BC%89?node-id=0-1&p=f&t=6phUyl9iC1zHVESt-0
+)
 
-### READMEに記載した機能
-**【MVPリリース時】**
-- [x] ユーザー登録（メール＋パスワード）
-- [x] 欲しいもの登録（タイトル／価格／リマインド期間）
-- [x] 「購入決定／見送り／再検討」判断機能
-- [x] ホーム画面（今月の熟考完了数の表示）
-- [x] リスト画面（登録中／検討完了／購入済みのタブ切替）
-**【本リリースまでに実装したい機能】**
-- [x] メール通知（登録から24時間後）
-- [x] LINE通知機能（LINE Messaging API）
-- [x] URL自動抽出による商品情報取得
-- [x] カレンダービューでの振り返り
-- [x] 週次レポートメール
-- [x] 満足度レビュー
-- [x] 「買いたい理由 vs 買わない理由」メモ欄
-
-### 未ログインでも閲覧または利用できるページ
-以下の項目は適切に未ログインでも閲覧または利用できる画面遷移になっているか？
-- なし
-
-### メールアドレス・パスワード変更確認項目
-直接変更できるものではなく、一旦メールなどを介して専用のページで変更する画面遷移になっているか？
-- [x] メールアドレス
-- [x] パスワード
+## ER図
+<img width="948" height="817" alt="image" src="https://github.com/user-attachments/assets/293caf01-48ba-429c-8708-9d55e8214c41" />

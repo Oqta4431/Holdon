@@ -20,6 +20,21 @@
   </head>
 
   <body>
+  <header>
+      <% if user_signed_in? %>
+        <!-- rails7ではlink_toだとdeleteメソッド飛ばないので、button_toに変えている-->
+        <li>
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
+        </li>
+      <% else %>
+        <li>
+          <%= button_to "サインアップ", new_user_registration_path %>
+        </li>
+        <li>
+          <%= button_to "ログイン", new_user_session_path %>
+        </li>
+      <% end %>
+    </header>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>

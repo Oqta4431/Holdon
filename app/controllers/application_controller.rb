@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # /users/sign_up
-    # mail+PW以外のパラメータでログインが必要になれば以下の書き方で追加する
-    # devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :phone_number, :full_name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 end

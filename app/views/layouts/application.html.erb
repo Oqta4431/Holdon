@@ -14,13 +14,30 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body>
+  <header>
+      <% if user_signed_in? %>
+        <!-- rails7ではlink_toだとdeleteメソッド飛ばないので、button_toに変えている-->
+        <li>
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
+        </li>
+        <li>
+          <%= "こんにちは！#{current_user.name}さん" %>
+        </li>
+      <% else %>
+        <li>
+          <%= button_to "サインアップ", new_user_registration_path %>
+        </li>
+        <li>
+          <%= button_to "ログイン", new_user_session_path %>
+        </li>
+      <% end %>
+    </header>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "Holdon" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -14,32 +14,45 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-  <header>
-      <% if user_signed_in? %>
-        <!-- rails7ではlink_toだとdeleteメソッド飛ばないので、button_toに変えている-->
-        <li>
-          <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
-        </li>
-        <li>
-          <%= "こんにちは！#{current_user.name}さん" %>
-        </li>
-      <% else %>
-        <li>
-          <%= button_to "サインアップ", new_user_registration_path %>
-        </li>
-        <li>
-          <%= button_to "ログイン", new_user_session_path %>
-        </li>
-      <% end %>
-    </header>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="bg-secondary"> <!-- ① 全体背景はベージュ -->
+
+    <!-- ② 画面中央にスマホ幅のアプリ本体を置くコンテナ -->
+    <div class="min-h-screen flex flex-col items-center">
+
+      <!-- ③ アプリ本体（スマホ画面） -->
+      <div class="w-full max-w-md flex flex-col min-h-screen bg-base-200 text-base-content">
+        <header class="bg-primary">
+          <% if user_signed_in? %>
+            <!-- rails7ではlink_toだとdeleteメソッド飛ばないので、button_toに変えている-->
+            <li>
+              <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
+            </li>
+            <li>
+              <%= "こんにちは！#{current_user.name}さん" %>
+            </li>
+          <% else %>
+            <li>
+              <%= button_to "サインアップ", new_user_registration_path %>
+            </li>
+            <li>
+              <%= button_to "ログイン", new_user_session_path %>
+            </li>
+          <% end %>
+        </header>
+
+        <!-- ヘッダーはここにpartialで入れる-->
+
+        <main class="flex-1 px-4 py-4">
+          <!-- フラッシュメッセージはここにpartialで入れる -->
+          <%= yield %>
+        </main>
+
+        <!-- フッターはここにpartialで入れる -->
+      </div>
+    </div>
   </body>
 </html>

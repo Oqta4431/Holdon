@@ -1,44 +1,75 @@
-<div class="container home-sections d-flex flex-row justify-content-center
-  align-items-center"
->
-  <div class="login-section pt-3">
-    <div class="card text-center pt-5 mx-auto" style="width: 23rem;">
-      <h1>サインアップ画面</h1>
+<div class="flex flex-col justify-center items-center min-h-[70vh]">
+  <div class="w-full">
 
-      <div class="card-body">
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-          <div class="mb-3 mt-4">
-            <%= f.email_field :email, class: "form-control", placeholder: "メールアドレス" %>
+    <!-- メインのサインアップカード -->
+    <div class="card bg-base-100 shadow-md">
+      <div class="card-body space-y-4">
+
+        <h1 class="text-xl font-bold text-center">アカウント登録</h1>
+
+        <%= form_with model: resource,
+                      as: resource_name,
+                      url: registration_path(resource_name),
+                      data: { turbo: false },
+                      class: "space-y-4" do |f| %>
+
+          <!-- お名前 -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">お名前</span>
+            </label>
+            <%= f.text_field :name,
+                  autocomplete: "name",
+                  class: "input input-bordered w-full" %>
           </div>
 
-          <div class="mb-3 mt-4">
-            <%= f.text_field :name, class: "form-control", placeholder: "お名前" %>
+          <!-- メールアドレス -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">メールアドレス</span>
+            </label>
+            <%= f.email_field :email,
+                  autocomplete: "email",
+                  class: "input input-bordered w-full" %>
           </div>
 
-          <div class="mb-3">
-            <%= f.password_field :password, class: "form-control", placeholder: "パスワード" %>
+          <!-- パスワード -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">パスワード</span>
+            </label>
+            <%= f.password_field :password,
+                  autocomplete: "new-password",
+                  class: "input input-bordered w-full" %>
           </div>
 
-          <div class="mb-3">
-            <%= f.password_field :password_confirmation, class: "form-control", placeholder: "パスワード確認" %>
+          <!-- パスワード確認 -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">パスワード（確認用）</span>
+            </label>
+            <%= f.password_field :password_confirmation,
+                  autocomplete: "new-password",
+                  class: "input input-bordered w-full" %>
           </div>
 
-          <%= f.submit "サインアップ", class: "btn btn-primary w-100" %>
+          <!-- サインアップボタン -->
+          <div class="form-control pt-2">
+            <%= f.submit "サインアップ",
+                  class: "btn btn-primary w-full" %>
+          </div>
         <% end %>
 
-        <% if notice %>
-          <p class="notice"><%= notice %></p>
-        <% elsif alert %>
-          <p class="alert"><%= alert %></p>
-        <% end %>
       </div>
     </div>
 
-    <div class="card text-center py-2 mt-3 mx-auto" style="width: 23rem;">
-      <div class="card-text">
-        既にアカウントを持っている？
-        <%= link_to "サインイン", new_user_session_path, class: "fs-6 my-4 text-decoration-none text-info" %>
-      </div>
+    <!-- ログイン誘導エリア -->
+    <div class="mt-6 text-center text-sm space-y-2">
+      <p>既にアカウントを持っている？</p>
+      <%= link_to "ログイン",
+            new_user_session_path,
+            class: "btn btn-secondary w-full" %>
     </div>
+
   </div>
 </div>

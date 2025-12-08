@@ -1,39 +1,79 @@
-<div class="container home-sections d-flex flex-row justify-content-center
-  align-items-center"
->
-  <div class="images-section pt-3 d-none d-lg-block"></div>
+<div class="flex flex-col justify-center items-center min-h-[70vh]">
+  <div class="w-full">
 
-  <div class="login-section pt-3">
-    <div class="card text-center pt-5" style="width: 23rem;">
-      <h1>ログイン画面</h1>
-      <div class="card-body">
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <div class="mb-3 mt-4">
-            <%= f.email_field :email, class: "form-control", placeholder: "電話番号, ユーザ名, Eメール" %>
-          </div>
+    <!-- メインのログインカード -->
+    <div class="card bg-base-100 shadow-sm">
+      <div class="card-body space-y-4">
 
-          <div class="mb-3">
-            <%= f.password_field :password, class: "form-control", placeholder: "パスワード" %>
-          </div>
+        <h1 class="text-xl font-bold text-center">ログイン</h1>
 
-          <%= f.submit "ログイン", class: "btn btn-primary w-100" %>
-        <% end %>
-
+        <!-- 仮で表示させている、整形すること！ -->
         <% if notice %>
           <p class="notice"><%= notice %></p>
         <% elsif alert %>
           <p class="alert"><%= alert %></p>
         <% end %>
 
-        <a href="#" class="fs-6 d-block my-4 text-decoration-none"> パスワードを忘れた？</a>
+        <%= form_with model: resource,
+                      as: resource_name,
+                      url: session_path(resource_name),
+                      data: { turbo: false },
+                      class: "space-y-4" do |f| %>
+
+          <!-- メールアドレス -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">メールアドレス</span>
+            </label>
+            <%= f.email_field :email,
+                  autocomplete: "email",
+                  class: "input input-bordered w-full" %>
+          </div>
+
+          <!-- パスワード -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">パスワード</span>
+            </label>
+            <%= f.password_field :password,
+                  autocomplete: "current-password",
+                  class: "input input-bordered w-full" %>
+          </div>
+
+          <!-- 仕様を理解していないので今は実装しない -->
+          <!-- remember me（有効なときだけ）
+          <% if devise_mapping.rememberable? %>
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start gap-2">
+                <%= f.check_box :remember_me, class: "checkbox checkbox-sm" %>
+                <span class="label-text text-sm">ログイン情報を保存する</span>
+              </label>
+            </div>
+          <% end %> -->
+
+          <!-- ログインボタン -->
+          <div class="form-control pt-2">
+            <%= f.submit "ログイン",
+                  class: "btn btn-primary w-full" %>
+          </div>
+        <% end %>
+
+        <!-- パスワードリセットへのリンク -->
+        <div class="text-right text-xs">
+          <%= link_to "パスワードを忘れた？",
+                new_password_path(resource_name),
+                class: "link link-primary" %>
+        </div>
       </div>
     </div>
 
-    <div class="card text-center py-2 mt-3" style="width: 23rem;">
-      <div class="card-text">
-        アカウントを持っていない？
-        <%= link_to "サインアップ", new_user_registration_path, class: "fs-6 my-4 text-decoration-none text-info" %>
-      </div>
+    <!-- サインアップ誘導エリア -->
+    <div class="mt-6 text-center text-sm space-y-2">
+      <p>アカウントを持っていない？</p>
+      <%= link_to "サインアップ",
+            new_user_registration_path,
+            class: "btn btn-secondary w-full" %>
     </div>
+
   </div>
 </div>

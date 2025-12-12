@@ -1,2 +1,49 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui"{
+  themes: ["Holdon"];
+}
+
+@plugin "daisyui/theme" {
+  name: "Holdon";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: #FAFAF7;
+  --color-base-200: #FAFAF7;
+  --color-base-300: #FAFAF7;
+  --color-base-content: oklch(21% 0.034 264.665);
+
+  --color-primary: #A8C3A0;
+  --color-primary-content: #333333;
+
+  --color-secondary: #E8D9B1;
+  --color-secondary-content: #333333;
+
+  --color-accent: #A8C3A0;
+  --color-accent-content: #333333;
+
+  --color-neutral: #333333;
+  --color-neutral-content: #FAFAF7;
+
+  --color-info: #A7C7D9;
+  --color-info-content: #333333;
+
+  --color-success: #88B090;
+  --color-success-content: #333333;
+
+  --color-warning: #F2C49B;
+  --color-warning-content: #333333;
+
+  --color-error: #D08A84;
+  --color-error-content: #333333;
+
+  --radius-selector: 0.25rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.25rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 1;
+}
+

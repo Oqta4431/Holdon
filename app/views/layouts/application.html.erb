@@ -47,8 +47,25 @@
         <!-- ヘッダーはここにpartialで入れる-->
 
         <main class="flex-1 px-4 py-4">
+
           <!-- フラッシュメッセージはここにpartialで入れる -->
+          <% flash.each do |msg_type, msg| %>
+            <% daisy_type =
+              case msg_type.to_sym
+              when :notice, :success then "success"
+              when :alert,  :error   then "error"
+              when :warning          then "warning"
+              when :info             then "info"
+              else "info"
+              end
+            %>
+            <div class="alert alert-<%= daisy_type %> mb-3">
+              <%= msg %>
+            </div>
+          <% end %>
+
           <%= yield %>
+
         </main>
 
         <!-- フッターはここにpartialで入れる -->

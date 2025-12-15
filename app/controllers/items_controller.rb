@@ -12,9 +12,9 @@ class ItemsController < ApplicationController
   def create
     @item = current_user.items.build(item_params)
     if @item.save
-      redirect_to items_path, success: t('defaults.flash_message.created')
+      redirect_to items_path, success: "商品を追加しました"
     else
-      flash.now[:danger] = t('defaults.flash_message.not_created')
+      flash.now[:error] = "商品を追加出来ませんでした"
       render :new, status: :unprocessable_entity
     end
   end

@@ -27,6 +27,22 @@
             <%= f.number_field :price, class: "input input-bordered w-full" %>
           </div>
 
+          <!-- URL：任意 -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">URL</span>
+            </label>
+            <%= f.text_field :url, class: "input input-bordered w-full", placeholder: "https://example.com" %>
+          </div>
+
+          <!-- 登録時のメモ：任意 -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">メモ</span>
+            </label>
+            <%= f.text_area :memo, class: "textarea textarea-bordered w-full", rows: 4, placeholder: "説明" %>
+          </div>
+
           <!-- 登録ボタン -->
           <div class="form-control pt-2">
             <%= f.submit "登録", class: "btn btn-primary w-full" %>

@@ -19,6 +19,26 @@ class ItemsController < ApplicationController
     end
   end
 
+  def edit
+    @item = current_user.items.find(params[:id])
+  end
+
+  def update
+    @item = current_user.items.find(params[:id])
+    if @item.update(item_params)
+      redirect_to items_path, success: "商品を編集しました"
+    else
+      flash.now[:error] = "商品を編集できませんでした"
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    item = current_user.items.find(params[:id])
+    item.destroy!
+    redirect_to items_path, success: "商品を削除しました"
+  end
+
   private
 
   def item_params

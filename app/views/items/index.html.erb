@@ -3,7 +3,12 @@
 <ul>
   <% @items.each do |item| %>
     <li>
-      <%= item.name %> - ¥ <%= item.price %>
+      <%= item.name %> - ¥ <%= item.price %> - <%= link_to "編集", edit_item_path(item), class: "btn btn-sm" %>
+      - <%= link_to "削除", item_path(item),
+      data: {
+        turbo_method: :delete,
+        turbo_confirm: "本当に削除しますか？"
+      }, class: "btn btn-sm btn-error" %>
     </li>
   <% end %>
 </ul>

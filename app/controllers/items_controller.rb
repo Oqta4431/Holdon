@@ -33,6 +33,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    item = current_user.items.find(params[:id])
+    item.destroy!
+    redirect_to items_path, success: "商品を削除しました"
+  end
+
   private
 
   def item_params

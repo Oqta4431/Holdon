@@ -3,12 +3,20 @@
 <ul>
   <% @items.each do |item| %>
     <li>
-      <%= item.name %> - ¥ <%= item.price %> - <%= link_to "編集", edit_item_path(item), class: "btn btn-sm" %>
-      - <%= link_to "削除", item_path(item),
+      <%= item.name %> : ¥ <%= item.price %> <%= link_to "編集", edit_item_path(item), class: "btn btn-sm" %>
+      <%= link_to "削除", item_path(item),
       data: {
         turbo_method: :delete,
         turbo_confirm: "本当に削除しますか？"
       }, class: "btn btn-sm btn-error" %>
+        <ul class="ml-4 my-1">
+          <li>
+            URL : <%= link_to item.url, item.url, target: "_blank", rel: "noopener", class: "link link-primary" %>
+          </li>
+          <li>
+            説明 : <span class="whitespace-pre-wrap"><%= item.memo %></span>
+          </li>
+        </ul>
     </li>
   <% end %>
 </ul>

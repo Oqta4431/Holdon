@@ -3,7 +3,7 @@
 <ul>
   <% @items.each do |item| %>
     <li>
-      <%= item.name %> - ¥ <%= item.price %>
+      <%= item.name %> - ¥ <%= item.price %> - <%= link_to "編集", edit_item_path(item), class: "btn btn-sm" %>
     </li>
   <% end %>
 </ul>

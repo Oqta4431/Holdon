@@ -1,8 +1,12 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_item, only: %i[show edit update destroy]
 
   def index
     @items = current_user.items.order(created_at: :desc)
+  end
+
+  def show
   end
 
   def new
@@ -20,11 +24,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = current_user.items.find(params[:id])
   end
 
   def update
-    @item = current_user.items.find(params[:id])
     if @item.update(item_params)
       redirect_to items_path, success: "商品を編集しました"
     else
@@ -34,8 +36,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    item = current_user.items.find(params[:id])
-    item.destroy!
+    @item.destroy!
     redirect_to items_path, success: "商品を削除しました"
   end
 
@@ -43,5 +44,9 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:name, :price, :url, :memo)
+  end
+
+  def set_item
+    @item = current_user.items.find(params[:id])
   end
 end

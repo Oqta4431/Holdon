@@ -69,28 +69,7 @@
         </main>
 
         <!-- フッターはここにpartialで入れる -->
-        <!-- デバッグ時の画面遷移用に雑に置いています、機能確認が終わったら整える -->
-        <footer class="bg-primary">
-          <% if user_signed_in? %>
-            <!-- rails7ではlink_toだとdeleteメソッド飛ばないので、button_toに変えている-->
-            <li>
-              <%= link_to "商品追加", new_item_path %>
-            </li>
-            <li>
-              <%= link_to "商品一覧", items_path %>
-            </li>
-            <li>
-              <%= link_to "ホーム画面", root_path %>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to "サインアップ", new_user_registration_path %>
-            </li>
-            <li>
-              <%= link_to "ログイン", new_user_session_path %>
-            </li>
-          <% end %>
-        </footer>
+        <%= render "shared/footer" %>
       </div>
     </div>
   </body>

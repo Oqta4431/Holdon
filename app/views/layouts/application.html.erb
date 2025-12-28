@@ -25,26 +25,10 @@
 
       <!-- ③ アプリ本体（スマホ画面） -->
       <div class="w-full max-w-md flex flex-col min-h-screen bg-base-200 text-base-content">
-        <header class="bg-primary">
-          <% if user_signed_in? %>
-            <!-- rails7ではlink_toだとdeleteメソッド飛ばないので、button_toに変えている-->
-            <li>
-              <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
-            </li>
-            <li>
-              <%= "こんにちは！#{current_user.name}さん" %>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to "サインアップ", new_user_registration_path %>
-            </li>
-            <li>
-              <%= link_to "ログイン", new_user_session_path %>
-            </li>
-          <% end %>
-        </header>
+
 
         <!-- ヘッダーはここにpartialで入れる-->
+        <%= render "shared/header" %>
 
         <main class="flex-1 px-4 py-4 pb-28">
 

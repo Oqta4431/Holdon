@@ -1,0 +1,41 @@
+<header class="bg-primary sticky top-0 z-50">
+  <div class="mx-auto w-full max-w-md px-4 py-4">
+    <div class="flex items-center justify-between">
+
+      <!-- 左：ロゴ -->
+      <%= link_to root_path, class: "text-3xl font-extrabold text-base-content" do %>
+        Holdon
+      <% end %>
+
+      <!-- 右：ボタン群 -->
+      <div class="flex items-center gap-2">
+        <% if user_signed_in? %>
+          <%= button_to "ログアウト",
+                destroy_user_session_path,
+                method: :delete,
+                class: "btn btn-sm btn-outline" %>
+        <% else %>
+          <%= link_to "サインアップ",
+                new_user_registration_path,
+                class: "btn btn-sm btn-outline" %>
+
+          <%= link_to "ログイン",
+                new_user_session_path,
+                class: "btn btn-sm btn-outline" %>
+        <% end %>
+      </div>
+
+    </div>
+
+    <%# もし挨拶を出すなら、ヘッダー下に小さく置くと崩れない %>
+    <% if user_signed_in? && current_user.name.present? %>
+      <p class="mt-2 text-sm text-base-content/70">
+        こんにちは！<%= current_user.name %>さん
+      </p>
+    <% else %>
+      <p class="mt-2 text-sm text-base-content/70">
+        物欲をコントロールしましょう
+      </p>
+    <% end %>
+  </div>
+</header>

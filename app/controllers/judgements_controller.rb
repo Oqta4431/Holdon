@@ -3,8 +3,7 @@ class JudgementsController < ApplicationController
 
   def update
     item = current_user.items.find(params[:item_id])
-    ## judgementがnilだった場合、consideringとして登録しておく
-    judgement = item.judgement || item.create_judgement!(purchase_status: :considering)
+    judgement = item.judgement
 
     judgement.update!(
       purchase_status: judgement_params[:purchase_status],

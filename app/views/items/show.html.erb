@@ -118,9 +118,9 @@
   </div>
 
   <div class="flex items-center justify-between">
-    <%= button_to "見送る", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :skipped}}%>
-    <%= button_to "再考する", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :considering}}%>
-    <%= button_to "購入する", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :purchased}}%>
+    <%= button_to "見送る", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :skipped } } %>
+    <%= button_to "再考する", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :considering } } %>
+    <%= button_to "購入する", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :purchased } } %>
   </div>
 
 </div>

@@ -86,6 +86,11 @@
               ¥ <%= number_with_delimiter(@item.price) %>
             </div>
 
+            <!-- ⚠️デバッグ用、コミットする前に消すこと！⚠️-->
+            <div class="mt-1 text-sm font-semibold">
+              状態：<%= @item.judgement&.purchase_status || "nilですね...😔" %>
+            </div>
+
             <% if @item.url.present? %>
               <div class="mt-1 text-xs text-base-content/60">
                 タップで商品ページへ
@@ -110,6 +115,12 @@
         </div>
       <% end %>
     </div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <%= button_to "見送る", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :skipped}}%>
+    <%= button_to "再考する", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :considering}}%>
+    <%= button_to "購入する", item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :purchased}}%>
   </div>
 
 </div>

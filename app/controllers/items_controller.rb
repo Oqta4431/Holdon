@@ -15,6 +15,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = current_user.items.build(item_params)
+    @item.build_judgement(purchase_status: :considering, decided_at: Time.current)
     if @item.save
       redirect_to items_path, success: "商品を追加しました"
     else

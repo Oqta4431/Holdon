@@ -6,4 +6,6 @@ class Item < ApplicationRecord
   validates :memo, length: { maximum: 65_535 }, allow_blank: true
 
   belongs_to :user
+
+  has_one :judgement, dependent: :destroy
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_13_051245) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_29_202455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_13_051245) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_items_on_user_id"
+  end
+
+  create_table "judgements", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.integer "purchase_status", null: false
+    t.datetime "decided_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_judgements_on_item_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,4 +49,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_13_051245) do
   end
 
   add_foreign_key "items", "users"
+  add_foreign_key "judgements", "items"
 end

@@ -1,0 +1,2 @@
+class JudgementsController < ApplicationController
+end

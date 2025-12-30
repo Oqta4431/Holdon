@@ -1,2 +1,0 @@
-class JudgementController < ApplicationController
-end

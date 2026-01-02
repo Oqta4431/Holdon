@@ -15,7 +15,11 @@ class ItemsController < ApplicationController
 
   def create
     @item = current_user.items.build(item_params)
-    @item.build_judgement(purchase_status: :considering, decided_at: Time.current)
+    @item.build_judgement(purchase_status: :considering)
+    ## REMIND_INTERVAL
+    ## dev環境では1min, それ以外では24h
+    ## ⚠️MVP用、本リリで任意の間隔でリマインド出来るように改良する⚠️
+    @item.build_reminder(remind_at: Time.current + REMIND_INTERVAL)
     if @item.save
       redirect_to items_path, success: "商品を追加しました"
     else

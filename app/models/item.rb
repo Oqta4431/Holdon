@@ -8,4 +8,5 @@ class Item < ApplicationRecord
   belongs_to :user
 
   has_one :judgement, dependent: :destroy
+  has_one :reminder, dependent: :destroy
 end

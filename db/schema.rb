@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_29_202455) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_31_213243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_29_202455) do
     t.index ["item_id"], name: "index_judgements_on_item_id", unique: true
   end
 
+  create_table "reminders", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.datetime "remind_at"
+    t.integer "remind_interval"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_reminders_on_item_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -50,4 +59,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_29_202455) do
 
   add_foreign_key "items", "users"
   add_foreign_key "judgements", "items"
+  add_foreign_key "reminders", "items"
 end

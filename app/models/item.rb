@@ -9,4 +9,11 @@ class Item < ApplicationRecord
 
   has_one :judgement, dependent: :destroy
   has_one :reminder, dependent: :destroy
+
+  ## 判断対象の商品を取得
+  scope :ready_for_judgement, -> {
+    joins(:judgement, :reminder)
+    .where(judgements: { purchase_status: Judgement.purchase_statuses[:considering]})
+    .where('reminders.remind_at <= ?', Time.current)
+  }
 end

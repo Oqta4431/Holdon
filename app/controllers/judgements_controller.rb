@@ -20,8 +20,9 @@ class JudgementsController < ApplicationController
       ## purchased / skipped の場合はリマインド時刻は更新しない
     end
 
-    ## ⚠️購入判断画面を作成したらリダイレクト先を変更すること⚠️
-    redirect_to item_path(item), notice: "購入判断を更新しました"
+    ## 判断画面へ遷移 → 次の一件を取得して表示 → ステータス更新 → 判断画面へ遷移
+    ## 判断対象がなくなるまでループする
+    redirect_to judgements_path, notice: "購入判断を更新しました"
   end
 
   private

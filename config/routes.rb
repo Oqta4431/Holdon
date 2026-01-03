@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   resources :items do
     resource :judgement, only: %i[update]
   end
+
+  resources :judgements, only: %i[index]
 end

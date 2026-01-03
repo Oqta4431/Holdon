@@ -1,6 +1,10 @@
 class JudgementsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @item = current_user.items.ready_for_judgement.order(created_at: :asc).first
+  end
+
   def update
     item = current_user.items.find(params[:item_id])
     judgement = item.judgement
@@ -16,8 +20,10 @@ class JudgementsController < ApplicationController
       ## purchased / skipped の場合はリマインド時刻は更新しない
     end
 
-    ## ⚠️購入判断画面を作成したらリダイレクト先を変更すること⚠️
-    redirect_to item_path(item), notice: "購入判断を更新しました"
+    ## 判断画面へ遷移 → 次の一件を取得して表示 → ステータス更新 → 判断画面へ遷移
+    ## 判断対象がなくなるまでループする
+    redirect_path = params[:redirect_to].presence
+    redirect_to redirect_path, notice: "購入判断を更新しました"
   end
 
   private

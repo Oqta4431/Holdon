@@ -1,0 +1,48 @@
+<div class="min-h-screen bg-[#efe3b8] px-4 pb-28">
+  <% if @item.present? %>
+    <div class="max-w-md mx-auto pt-6">
+      <div class="bg-[#d9d9d9] border border-base-300 rounded-2xl shadow-sm p-4">
+        <% if @item.image.present? %>
+          <img src="<%= @item.image %>" alt="商品画像" class="w-full h-60 object-cover rounded-xl mb-6" />
+        <% else %>
+          <div class="w-full h-60 bg-[#cfcfcf] rounded-xl flex items-center justify-center text-2xl font-black text-base-content/80 mb-6">
+            商品画像
+          </div>
+        <% end %>
+
+        <h2 class="text-2xl font-black leading-tight mb-2"><%= @item.name %></h2>
+        <p class="text-lg font-semibold text-base-content/90 mb-2">¥<%= number_with_delimiter(@item.price) %></p>
+
+        <% if @item.memo.present? %>
+          <p class="text-sm text-base-content/70"><%= simple_format(@item.memo) %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="sticky bottom-20 z-10 mt-4">
+      <div class="max-w-md mx-auto bg-base-100 border border-base-300 rounded-2xl p-4">
+        <div class="flex items-center justify-between">
+          <%= button_to item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :skipped }, redirect_to: judgements_path }, class: "w-20 h-20 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-4xl font-black text-[#9dbbd3] shadow-sm" do %>
+            <span aria-hidden="true">✕</span>
+            <span class="sr-only">見送り</span>
+          <% end %>
+          <%= button_to item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :considering }, redirect_to: judgements_path }, class: "w-20 h-20 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-4xl font-black text-[#7bb08a] shadow-sm" do %>
+            <span aria-hidden="true">↻</span>
+            <span class="sr-only">再検討</span>
+          <% end %>
+          <%= button_to item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :purchased }, redirect_to: judgements_path }, class: "w-20 h-20 rounded-full border-2 border-[#c97b7b] bg-white flex items-center justify-center text-4xl font-black text-[#c97b7b] shadow-sm" do %>
+            <span aria-hidden="true">◯</span>
+            <span class="sr-only">購入</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="max-w-md mx-auto pt-10">
+      <div class="h-[70vh] flex flex-col items-center justify-center text-base-content/60 bg-[#d9d9d9] rounded-2xl border border-base-300">
+        <div class="text-6xl mb-4">👐</div>
+        <p class="text-lg font-semibold">判断する商品はありません</p>
+      </div>
+    </div>
+  <% end %>
+</div>

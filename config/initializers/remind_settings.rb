@@ -3,5 +3,6 @@
 if Rails.env.development?
   REMIND_INTERVAL = 5.seconds
 else
-  REMIND_INTERVAL = 24.hours
+  ## ⚠️ MVPレビュー用（短縮）_20260104
+  REMIND_INTERVAL = 5.seconds
 end

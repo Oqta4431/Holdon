@@ -3,7 +3,27 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
 
   def index
-    @items = current_user.items.order(created_at: :desc)
+    allowed_statuses = %w[considering purchased skipped]
+
+    # デフォルトとして "considering" を採用
+    if allowed_statuses.include?(params[:status])
+      @status = params[:status]
+    else
+      @status = "considering"
+    end
+
+    base_scope = current_user.items
+                              .includes(:judgement)
+                              .joins(:judgement)
+                              .where(judgements: { purchase_status: @status })
+
+    # 検討中：登録日順
+    # 購入/見送り：判断をした日
+    if @status == "considering"
+      @items = base_scope.order(created_at: :desc)
+    else
+      @items = base_scope.order("judgements.decided_at DESC")
+    end
   end
 
   def show

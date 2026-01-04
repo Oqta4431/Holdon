@@ -1,6 +1,20 @@
 <div class="p-4 space-y-4">
-  <h1>登録中の商品</h1>
-  <p><%= current_user.name %>さんの商品一覧です</p>
+  <!-- ステータス切り替えタブ -->
+  <div class="tabs tabs-box">
+    <%= link_to "見送った",
+      items_path(status: "skipped"),
+      class: "tab flex-1 text-center bg-secondary text-secondary-content #{'tab-active !bg-primary !text-primary-content' if @status == 'skipped'}" %>
+
+    <%= link_to "検討中",
+      items_path(status: "considering"),
+      class: "tab flex-1 text-center bg-secondary text-secondary-content #{'tab-active !bg-primary !text-primary-content' if @status == 'considering'}" %>
+
+    <%= link_to "購入した",
+      items_path(status: "purchased"),
+      class: "tab flex-1 text-center bg-secondary text-secondary-content #{'tab-active !bg-primary !text-primary-content' if @status == 'purchased'}" %>
+  </div>
+
+  <!-- 商品一覧 -->
   <ul class="space-y-3">
     <% @items.each do |item| %>
       <li class="list-none">

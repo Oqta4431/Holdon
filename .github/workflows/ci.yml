@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   ruby_rubocop:
@@ -30,7 +31,7 @@ jobs:
           bundler-cache: true
       - name: Run Brakeman
         run: bundle exec brakeman -q
-        continue-on-error: true
+        continue-on-error: true  ## ⚠️エラーを一通り潰し終わったらこれは消すこと⚠️
 
   test:
     runs-on: ubuntu-latest
@@ -63,3 +64,27 @@ jobs:
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*_spec.rb') != '' }}
         run: bundle exec rspec
+
+  deploy:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+    needs:
+      - ruby_rubocop
+      - ruby_brakeman
+      - test
+    ## mainブランチにpush(=merge), もしくは手動実行されたとき
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+    env:
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+    concurrency:
+      group: deploy-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Ensure deploy hook is set
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "RENDER_DEPLOY_HOOK_URL is not set"
+            exit 1
+          fi
+      - name: Trigger Render deploy
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL" --retry 3 --retry-delay 2 > /dev/null

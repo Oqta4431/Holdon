@@ -13,7 +13,7 @@ class Item < ApplicationRecord
   ## 判断対象の商品を取得
   scope :ready_for_judgement, -> {
     joins(:judgement, :reminder)
-    .where(judgements: { purchase_status: Judgement.purchase_statuses[:considering]})
-    .where('reminders.remind_at <= ?', Time.current)
+    .where(judgements: { purchase_status: Judgement.purchase_statuses[:considering] })
+    .where("reminders.remind_at <= ?", Time.current)
   }
 end

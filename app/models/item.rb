@@ -1,4 +1,19 @@
 class Item < ApplicationRecord
+  has_one_attached :item_image
+
+  validates :item_image,
+            content_type: {
+              in: %w[
+                image/jpeg
+                image/png
+                image/webp
+                image/heic
+                image/heif
+                image/heic-sequence
+                image/heif-sequence
+              ]
+            },
+            size: { less_than: 5.megabytes }
   validates :name, presence: true, length: { maximum: 225 }
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :url, length: { maximum: 225 }, allow_blank: true

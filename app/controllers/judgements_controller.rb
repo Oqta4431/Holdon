@@ -2,7 +2,10 @@ class JudgementsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @item = current_user.items.ready_for_judgement.order(created_at: :asc).first
+    @item = current_user.items.ready_for_judgement
+                        .with_attached_item_image
+                        .order(created_at: :asc)
+                        .first
   end
 
   def update

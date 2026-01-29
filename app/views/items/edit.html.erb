@@ -42,20 +42,29 @@
           </div>
         </div>
 
-        <!-- 画像（未実装：ダミー枠） -->
+        <!-- 画像 -->
         <div class="pl-9">
-          <div class="w-full h-28 rounded-box border border-base-content/20 bg-base-100 flex flex-col items-center justify-center gap-2">
-            <!-- Image icon (Heroicons) -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
-                class="h-7 w-7 opacity-60"
-            >
-              <path fill="currentColor" fill-rule="evenodd"
-                d="M1 8a2 2 0 0 1 2-2h.93a2 2 0 0 0 1.664-.89l.812-1.22A2 2 0 0 1 8.07 3h3.86a2 2 0 0 1 1.664.89l.812 1.22A2 2 0 0 0 16.07 6H17a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2zm13.5 3a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0M10 14a3 3 0 1 0 0-6a3 3 0 0 0 0 6"
-                clip-rule="evenodd"
-              />
-            </svg>
+          <div class="w-full h-28 rounded-box border border-base-content/20 bg-base-100 flex flex-col items-center justify-center gap-1 px-3">
 
-            <div class="text-xs text-base-content/60">画像（未実装）</div>
+            <% if @item.item_image.attached? %>
+              <%= image_tag @item.item_image, class: "w-20 h-20 object-cover rounded-box" %>
+            <% else %>
+              <!-- Image icon (Heroicons) -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
+                  class="h-7 w-7 opacity-60"
+              >
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M1 8a2 2 0 0 1 2-2h.93a2 2 0 0 0 1.664-.89l.812-1.22A2 2 0 0 1 8.07 3h3.86a2 2 0 0 1 1.664.89l.812 1.22A2 2 0 0 0 16.07 6H17a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2zm13.5 3a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0M10 14a3 3 0 1 0 0-6a3 3 0 0 0 0 6"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <div class="text-xs text-base-content/60">画像を追加</div>
+            <% end %>
+
+            <%= f.file_field :item_image,
+              accept: "image/*,image/heic,image/heif,image/heic-sequence,image/heif-sequence",
+              capture: "environment",
+              class: "file-input file-input-bordered file-input-xs w-full max-w-xs" %>
           </div>
 
           <p class="mt-2 text-xs text-base-content/60">

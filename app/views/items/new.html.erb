@@ -31,9 +31,9 @@
           </div>
         </div>
 
-        <!-- 画像（未実装：ダミー枠） -->
+        <!-- 画像 -->
         <div class="pl-9">
-          <div class="w-full h-28 rounded-box border border-base-content/20 bg-base-100 flex flex-col items-center justify-center gap-2">
+          <div class="w-full h-28 rounded-box border border-base-content/20 bg-base-100 flex flex-col items-center justify-center gap-1 px-3">
             <!-- Image icon (Heroicons) -->
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
                 class="h-7 w-7 opacity-60"
@@ -44,7 +44,11 @@
               />
             </svg>
 
-            <div class="text-xs text-base-content/60">画像（未実装）</div>
+            <div class="text-xs text-base-content/60">画像を追加</div>
+
+            <%= f.file_field :item_image,
+              accept: "image/*,image/heic,image/heif,image/heic-sequence,image/heif-sequence",
+              class: "file-input file-input-bordered file-input-xs w-full max-w-xs" %>
           </div>
 
           <p class="mt-2 text-xs text-base-content/60">

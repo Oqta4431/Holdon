@@ -1,12 +1,12 @@
 class Item < ApplicationRecord
   has_one_attached :item_image do |attachable|
     attachable.variant :thumb,
-                        resize_to_fill: [80, 80],
+                        resize_to_fill: [ 80, 80 ],
                         format: :webp,
                         saver: { quality: 75, strip: true }
 
     attachable.variant :large,
-                        resize_to_limit: [800, 800],
+                        resize_to_limit: [ 800, 800 ],
                         format: :webp,
                         saver: { quality: 82, strip: true }
   end

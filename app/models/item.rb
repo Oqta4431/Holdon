@@ -1,5 +1,8 @@
 class Item < ApplicationRecord
-  has_one_attached :item_image
+  has_one_attached :item_image do |attachable|
+    attachable.variant :thumb, resize_to_fill: [80, 80]
+    attachable.variant :large, resize_to_limit: [800, 800]
+  end
 
   validates :item_image,
             content_type: {

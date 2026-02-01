@@ -1,4 +1,29 @@
 class Item < ApplicationRecord
+  has_one_attached :item_image do |attachable|
+    attachable.variant :thumb,
+                        resize_to_fill: [ 80, 80 ],
+                        format: :webp,
+                        saver: { quality: 75, strip: true }
+
+    attachable.variant :large,
+                        resize_to_limit: [ 800, 800 ],
+                        format: :webp,
+                        saver: { quality: 82, strip: true }
+  end
+
+  validates :item_image,
+            content_type: {
+              in: %w[
+                image/jpeg
+                image/png
+                image/webp
+                image/heic
+                image/heif
+                image/heic-sequence
+                image/heif-sequence
+              ]
+            },
+            size: { less_than: 5.megabytes }
   validates :name, presence: true, length: { maximum: 225 }
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :url, length: { maximum: 225 }, allow_blank: true

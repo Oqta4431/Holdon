@@ -47,6 +47,12 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_storage_validations (3.0.3)
+      activejob (>= 6.1.4)
+      activemodel (>= 6.1.4)
+      activestorage (>= 6.1.4)
+      activesupport (>= 6.1.4)
+      marcel (>= 1.0.3)
     activejob (7.2.3)
       activesupport (= 7.2.3)
       globalid (>= 0.3.6)
@@ -77,6 +83,25 @@ GEM
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     ast (2.4.3)
+    aws-eventstream (1.4.0)
+    aws-partitions (1.1211.0)
+    aws-sdk-core (3.241.4)
+      aws-eventstream (~> 1, >= 1.3.0)
+      aws-partitions (~> 1, >= 1.992.0)
+      aws-sigv4 (~> 1.9)
+      base64
+      bigdecimal
+      jmespath (~> 1, >= 1.6.1)
+      logger
+    aws-sdk-kms (1.121.0)
+      aws-sdk-core (~> 3, >= 3.241.4)
+      aws-sigv4 (~> 1.5)
+    aws-sdk-s3 (1.213.0)
+      aws-sdk-core (~> 3, >= 3.241.4)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.5)
+    aws-sigv4 (1.12.1)
+      aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.5.0)
@@ -127,10 +152,21 @@ GEM
       railties (>= 6.1.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
+    ffi (1.17.3-aarch64-linux-gnu)
+    ffi (1.17.3-aarch64-linux-musl)
+    ffi (1.17.3-arm-linux-gnu)
+    ffi (1.17.3-arm-linux-musl)
+    ffi (1.17.3-arm64-darwin)
+    ffi (1.17.3-x86_64-darwin)
+    ffi (1.17.3-x86_64-linux-gnu)
+    ffi (1.17.3-x86_64-linux-musl)
     globalid (1.3.0)
       activesupport (>= 6.1)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
+      ruby-vips (>= 2.0.17, < 3)
     io-console (0.8.1)
     irb (1.15.3)
       pp (>= 0.6.0)
@@ -139,6 +175,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
+    jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
     json (2.16.0)
@@ -156,6 +193,8 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
+    mini_magick (5.3.1)
+      logger
     mini_mime (1.1.5)
     minitest (5.26.2)
     msgpack (1.8.0)
@@ -290,6 +329,9 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
+    ruby-vips (2.3.0)
+      ffi (~> 1.12)
+      logger
     rubyzip (3.2.2)
     securerandom (0.4.1)
     selenium-webdriver (4.38.0)
@@ -359,6 +401,8 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  active_storage_validations
+  aws-sdk-s3
   better_errors
   binding_of_caller
   bootsnap
@@ -368,6 +412,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  image_processing (~> 1.2)
   jbuilder
   jsbundling-rails
   pg (~> 1.1)

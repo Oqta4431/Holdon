@@ -14,6 +14,7 @@ class ItemsController < ApplicationController
 
     base_scope = current_user.items
                               .includes(:judgement)
+                              .with_attached_item_image
                               .joins(:judgement)
                               .where(judgements: { purchase_status: @status })
 
@@ -68,7 +69,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :price, :url, :memo)
+    params.require(:item).permit(:name, :price, :url, :memo, :item_image)
   end
 
   def set_item

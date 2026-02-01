@@ -68,3 +68,5 @@ end
 gem "tailwindcss-rails"
 
 gem "devise"
+
+gem "aws-sdk-s3", require: false

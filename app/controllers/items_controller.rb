@@ -28,6 +28,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @reason = @item.reason || @item.build_reason
   end
 
   def new

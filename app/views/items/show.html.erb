@@ -121,6 +121,36 @@
     </div>
   </div>
 
+  <div class="card bg-base-100 shadow-sm border">
+    <div class="card-body p-3 space-y-3">
+      <div class="text-sm font-bold">理由メモ</div>
+
+      <%= form_with model: @reason, url: item_reason_path(@item), method: :patch, class: "space-y-3" do |f| %>
+        <div class="relative bg-base-200 rounded-box p-3">
+          <div class="absolute inset-y-3 left-1/2 w-px bg-base-content/20 pointer-events-none max-[360px]:hidden"></div>
+
+          <div class="grid grid-cols-2 max-[360px]:grid-cols-1 gap-3">
+            <div class="space-y-2">
+              <div class="text-sm font-bold">買う理由</div>
+              <%= f.text_area :purchase_reason,
+                              class: "textarea textarea-bordered w-full min-h-[12rem]",
+                              placeholder: "・なぜ惹かれた？\n・使う場面は？\n・長く使えそう？" %>
+            </div>
+
+            <div class="space-y-2">
+              <div class="text-sm font-bold">買わない理由</div>
+              <%= f.text_area :skip_reason,
+                              class: "textarea textarea-bordered w-full min-h-[12rem]",
+                              placeholder: "・今すぐ必要？\n・代用できる？\n・置き場所ある？" %>
+            </div>
+          </div>
+        </div>
+
+        <%= f.submit "保存", class: "btn btn-success w-full" %>
+      <% end %>
+    </div>
+  </div>
+
   <% if @item.judgement.purchase_status == "purchased" || @item.judgement.purchase_status == "skipped" %>
     <div class="flex items-center justify-between">
       <%= button_to "検討中に戻す", item_judgement_path(@item),

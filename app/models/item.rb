@@ -34,6 +34,7 @@ class Item < ApplicationRecord
 
   has_one :judgement, dependent: :destroy
   has_one :reminder, dependent: :destroy
+  has_one :reason, dependent: :destroy
 
   ## 判断対象の商品を取得
   scope :ready_for_judgement, -> {

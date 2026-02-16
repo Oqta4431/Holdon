@@ -1,7 +1,7 @@
 <div class="min-h-screen bg-[#efe3b8] px-4 pb-28">
   <% if @item.present? %>
-    <div class="max-w-md mx-auto pt-6">
-      <div class="bg-[#d9d9d9] border border-base-300 rounded-2xl shadow-sm p-4">
+    <div class="max-w-md mx-auto pt-6" data-controller="flip">
+      <div class="bg-[#d9d9d9] border border-base-300 rounded-2xl shadow-sm p-4 relative block" data-flip-target="front">
         <% if @item.item_image.attached? %>
           <%= image_tag @item.item_image.variant(:large), class: "w-full h-60 object-cover rounded-xl mb-6" %>
         <% else %>
@@ -16,6 +16,19 @@
         <% if @item.memo.present? %>
           <p class="text-sm text-base-content/70"><%= simple_format(@item.memo) %></p>
         <% end %>
+
+        <button type="button" data-action="flip#toggle" class="btn btn-sm btn-outline btn-circle w-10 h-10 border-base-content/40 shadow-sm absolute bottom-3 right-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24"><!-- Icon from HeroIcons by Refactoring UI Inc - https://github.com/tailwindlabs/heroicons/blob/master/LICENSE --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+        </button>
+      </div>
+
+      <div class="bg-[#d9d9d9] border border-base-300 rounded-2xl shadow-sm p-4 relative hidden" data-flip-target="back">
+        <div class="text-sm font-bold mb-3">理由メモ</div>
+        <%= render "items/reason_memo_readonly", reason: @item.reason %>
+
+        <button type="button" data-action="flip#toggle" class="btn btn-sm btn-outline btn-circle w-10 h-10 border-base-content/40 shadow-sm absolute bottom-3 right-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24"><!-- Icon from HeroIcons by Refactoring UI Inc - https://github.com/tailwindlabs/heroicons/blob/master/LICENSE --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+        </button>
       </div>
     </div>
 

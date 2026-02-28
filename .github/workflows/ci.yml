@@ -54,11 +54,22 @@ jobs:
       DATABASE_URL: postgres://postgres:password@localhost:5432/myapp_test
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.3.6
           bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci
+
       - name: Prepare DB
         run: bin/rails db:prepare
 

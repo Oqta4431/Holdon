@@ -61,6 +61,12 @@ jobs:
           bundler-cache: true
       - name: Prepare DB
         run: bin/rails db:prepare
+
+      - name: Build Tailwind CSS
+        run: bundle exec rails tailwindcss:build
+        env:
+          RAILS_ENV: test
+
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*_spec.rb') != '' }}
         run: bundle exec rspec

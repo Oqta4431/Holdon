@@ -78,6 +78,11 @@ jobs:
         env:
           RAILS_ENV: test
 
+      - name: Build JavaScript
+        run: bundle exec rails javascript:build
+        env:
+          RAILS_ENV: test
+
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*_spec.rb') != '' }}
         run: bundle exec rspec

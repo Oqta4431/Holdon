@@ -15,9 +15,9 @@
 
           <!-- メールアドレス -->
           <div class="form-control">
-            <label class="label">
+            <%= f.label :email, "メールアドレス", class: "label" do %>
               <span class="label-text font-semibold">メールアドレス</span>
-            </label>
+            <% end %>
             <%= f.email_field :email,
                   autocomplete: "email",
                   class: "input input-bordered w-full" %>
@@ -25,9 +25,9 @@
 
           <!-- パスワード -->
           <div class="form-control">
-            <label class="label">
+            <%= f.label :password, "パスワード", class: "label" do %>
               <span class="label-text font-semibold">パスワード</span>
-            </label>
+            <% end %>
             <%= f.password_field :password,
                   autocomplete: "current-password",
                   class: "input input-bordered w-full" %>

@@ -18,7 +18,15 @@ class JudgementsController < ApplicationController
       judgement.update!(purchase_status: status, decided_at: Time.current)
 
       if status == "considering"
-        item.reminder.update!(remind_at: Time.current + REMIND_INTERVAL)
+        # 再検討時：現在のremind_atを履歴としてpast_remindersに保存してから更新する
+        item.reminder.past_reminders.create!(past_remind_at: item.reminder.remind_at)
+
+        remind_interval = judgement_params[:remind_interval].to_i
+        # 起算点はdecided_at(判断した時刻)
+        item.reminder.update!(
+          remind_at: judgement.decided_at + remind_interval.seconds,
+          remind_interval: remind_interval
+        )
       end
       ## purchased / skipped の場合はリマインド時刻は更新しない
     end
@@ -32,6 +40,6 @@ class JudgementsController < ApplicationController
   private
 
   def judgement_params
-    params.require(:judgement).permit(:purchase_status)
+    params.require(:judgement).permit(:purchase_status, :remind_interval)
   end
 end

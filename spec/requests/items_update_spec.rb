@@ -5,6 +5,7 @@ RSpec.describe "Items update", type: :request do
   let(:user_b) { create(:user) }
   let(:item_a) { create(:item, user: user_a, name: "Before A", price: 1000, url: "https://before-a.example.com", memo: "before memo a") }
   let(:item_b) { create(:item, user: user_b, name: "Before B", price: 2000, url: "https://before-b.example.com", memo: "before memo b") }
+  let!(:reminder_a) { Reminder.create!(item: item_a, remind_at: 1.hour.from_now, remind_interval: 3600) }
 
   describe "未ログイン" do
     it "GET /items/:id/edit はログイン画面にリダイレクトされる" do
@@ -45,7 +46,8 @@ RSpec.describe "Items update", type: :request do
             name: "Updated Name",
             price: 34_567,
             url: "https://example.com/updated",
-            memo: "updated memo"
+            memo: "updated memo",
+            remind_interval: 3600
           }
         }
       end

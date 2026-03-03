@@ -21,7 +21,8 @@ RSpec.describe "Items image attachment", type: :request do
           item: {
             name: "画像付き商品",
             price: 12_000,
-            item_image: uploaded_file("sample.jpg")
+            item_image: uploaded_file("sample.jpg"),
+            remind_interval: 3600
           }
         }
       end.to change(Item, :count).by(1)
@@ -50,12 +51,13 @@ RSpec.describe "Items image attachment", type: :request do
   end
 
   describe "PATCH /items/:id" do
+    let(:item) { create(:item, user: user) }
+    let!(:reminder) { Reminder.create!(item: item, remind_at: 1.hour.from_now, remind_interval: 3600) }
     it "updateで画像添付できる" do
-      item = create(:item, user: user)
-
       patch item_path(item), params: {
         item: {
-          item_image: uploaded_file("sample.jpg")
+          item_image: uploaded_file("sample.jpg"),
+          remind_interval: 3600
         }
       }
 
@@ -64,13 +66,13 @@ RSpec.describe "Items image attachment", type: :request do
     end
 
     it "既存画像を別画像で差し替えるとblob_idが変わる" do
-      item = create(:item, user: user)
       item.item_image.attach(uploaded_file("sample.jpg"))
       original_blob_id = item.item_image.blob_id
 
       patch item_path(item), params: {
         item: {
-          item_image: uploaded_file("sample2.jpg")
+          item_image: uploaded_file("sample2.jpg"),
+          remind_interval: 3600
         }
       }
 

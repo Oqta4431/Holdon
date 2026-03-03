@@ -81,7 +81,7 @@ RSpec.describe "Judgements update", type: :request do
           reminder.update!(remind_at: base_time - 1.minute)
           remind_at_before = reminder.reload.remind_at
 
-          patch item_judgement_path(item), params: { judgement: { purchase_status: :considering }, redirect_to: judgements_path }
+          patch item_judgement_path(item), params: { judgement: { purchase_status: :considering, remind_interval: 3600 }, redirect_to: judgements_path }
 
           judgement.reload
           reminder.reload

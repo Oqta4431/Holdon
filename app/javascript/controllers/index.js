@@ -8,3 +8,7 @@ import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 import FlipController from "./flip_controller"
 application.register("flip", FlipController)
+
+import RemindIntervalController from "./remind_interval_controller"
+application.register("remind-interval", RemindIntervalController)
+

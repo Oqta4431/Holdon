@@ -166,6 +166,59 @@
           </div>
         </div>
 
+        <!-- リマインド期間 -->
+        <!-- 編集時は現在の remind_interval（秒）から数値と単位を逆算して初期表示する -->
+        <!-- 「日」で割り切れる場合は日、次に「時間」、それ以外は「分」で表示する -->
+        <% current_interval = @item.reminder&.remind_interval || Reminder::DEFAULT_REMIND_INTERVAL %>
+        <% if (current_interval % 86_400).zero?
+            initial_value = current_interval / 86_400
+            initial_unit  = "days"
+          elsif (current_interval % 3_600).zero?
+            initial_value = current_interval / 3_600
+            initial_unit  = "hours"
+          else
+            initial_value = current_interval / 60
+            initial_unit  = "minutes"
+          end %>
+
+        <div data-controller="remind-interval">
+          <div class="flex items-center gap-3">
+            <!-- Clock icon (Heroicons) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
+                class="h-6 w-6 shrink-0">
+              <path fill="currentColor" fill-rule="evenodd"
+                d="M10 18a8 8 0 1 0 0-16a8 8 0 0 0 0 16m.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            <div class="flex-1 flex items-center gap-2">
+              <select
+                class="select select-bordered flex-1"
+                data-remind-interval-target="value"
+                data-action="change->remind-interval#calculate"
+              >
+                <% (1..60).each do |n| %>
+                  <option value="<%= n %>" <%= "selected" if n == initial_value %>><%= n %></option>
+                <% end %>
+              </select>
+
+              <select
+                class="select select-bordered flex-1"
+                data-remind-interval-target="unit"
+                data-action="change->remind-interval#calculate"
+              >
+                <option value="minutes" <%= "selected" if initial_unit == "minutes" %>>分</option>
+                <option value="hours"   <%= "selected" if initial_unit == "hours" %>>時間</option>
+                <option value="days"    <%= "selected" if initial_unit == "days" %>>日</option>
+              </select>
+
+              <%= hidden_field_tag "item[remind_interval]", current_interval,
+                    data: { "remind-interval-target": "seconds" } %>
+            </div>
+          </div>
+        </div>
+
         <!-- 保存ボタン -->
         <div class="pt-2">
           <%= f.submit "保存", class: "btn w-full bg-primary text-primary-content hover:bg-primary/90 border-none" %>

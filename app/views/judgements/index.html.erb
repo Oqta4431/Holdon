@@ -39,10 +39,48 @@
             <span aria-hidden="true">✕</span>
             <span class="sr-only">見送り</span>
           <% end %>
-          <%= button_to item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :considering }, redirect_to: judgements_path }, class: "w-20 h-20 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-4xl font-black text-[#7bb08a] shadow-sm" do %>
-            <span aria-hidden="true">↻</span>
-            <span class="sr-only">再検討</span>
+
+          <!-- 再検討ボタン：リマインド期間を選択してから再検討できるようフォームに変更 -->
+          <%= form_with url: item_judgement_path(@item), method: :patch,
+                data: { controller: "remind-interval" } do |f| %>
+            <%= hidden_field_tag "judgement[purchase_status]", :considering %>
+            <%= hidden_field_tag :redirect_to, judgements_path %>
+
+            <!-- リマインド期間ピッカー（数値 × 単位） -->
+            <div class="flex items-center justify-center gap-2 mb-3">
+              <select
+                class="select select-bordered select-sm"
+                data-remind-interval-target="value"
+                data-action="change->remind-interval#calculate"
+              >
+                <% (1..60).each do |n| %>
+                  <option value="<%= n %>" <%= "selected" if n == 24 %>><%= n %></option>
+                <% end %>
+              </select>
+
+              <select
+                class="select select-bordered select-sm"
+                data-remind-interval-target="unit"
+                data-action="change->remind-interval#calculate"
+              >
+                <option value="minutes">分</option>
+                <option value="hours" selected>時間</option>
+                <option value="days">日</option>
+              </select>
+
+              <%= hidden_field_tag "judgement[remind_interval]", Reminder::DEFAULT_REMIND_INTERVAL,
+                    data: { "remind-interval-target": "seconds" } %>
+            </div>
+
+            <!-- 再検討ボタン -->
+            <%= f.button type: :submit,
+                  class: "w-20 h-20 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-4xl
+          font-black text-[#7bb08a] shadow-sm" do %>
+              <span aria-hidden="true">↻</span>
+              <span class="sr-only">再検討</span>
+            <% end %>
           <% end %>
+
           <%= button_to item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :purchased }, redirect_to: judgements_path }, class: "w-20 h-20 rounded-full border-2 border-[#c97b7b] bg-white flex items-center justify-center text-4xl font-black text-[#c97b7b] shadow-sm" do %>
             <span aria-hidden="true">◯</span>
             <span class="sr-only">購入</span>

@@ -28,7 +28,7 @@ RSpec.describe "Items create", type: :request do
 
     context "正常系" do
       let(:valid_params) do
-        { item: { name: "iPad", price: 120_000 } }
+        { item: { name: "iPad", price: 120_000, remind_interval: 3600 } }
       end
 
       it "POST /items で Item が作成され、current_user に紐づき、index にリダイレクトされる" do

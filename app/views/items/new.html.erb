@@ -150,6 +150,49 @@
           </div>
         </div>
 
+        <!-- リマインド期間 -->
+        <!-- Stimulusコントローラ remind_interval で数値×単位を秒に変換してから送信する -->
+        <div data-controller="remind-interval">
+          <div class="flex items-center gap-3">
+            <!-- Clock icon (Heroicons) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
+                class="h-6 w-6 shrink-0">
+              <path fill="currentColor" fill-rule="evenodd"
+                d="M10 18a8 8 0 1 0 0-16a8 8 0 0 0 0 16m.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            <div class="flex-1 flex items-center gap-2">
+              <!-- 数値セレクト（1〜60） -->
+              <select
+                class="select select-bordered flex-1"
+                data-remind-interval-target="value"
+                data-action="change->remind-interval#calculate"
+              >
+                <% (1..60).each do |n| %>
+                  <option value="<%= n %>" <%= "selected" if n == 24 %>><%= n %></option>
+                <% end %>
+              </select>
+
+              <!-- 単位セレクト -->
+              <select
+                class="select select-bordered flex-1"
+                data-remind-interval-target="unit"
+                data-action="change->remind-interval#calculate"
+              >
+                <option value="minutes">分</option>
+                <option value="hours" selected>時間</option>
+                <option value="days">日</option>
+              </select>
+
+              <!-- 秒換算後の値を送信するhiddenフィールド（デフォルト：86400秒 = 24時間） -->
+              <%= hidden_field_tag "item[remind_interval]", Reminder::DEFAULT_REMIND_INTERVAL,
+                    data: { "remind-interval-target": "seconds" } %>
+            </div>
+          </div>
+        </div>
+
         <!-- 保存ボタン -->
         <div class="pt-2">
           <%= f.submit "保存", class: "btn w-full bg-primary text-primary-content hover:bg-primary/90 border-none" %>

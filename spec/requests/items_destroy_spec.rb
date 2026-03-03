@@ -49,7 +49,7 @@ RSpec.describe "Items destroy", type: :request do
     context "関連レコード削除（dependent: :destroy）" do
       let!(:item_with_associations) { create(:item, user: user_a) }
       let!(:judgement) { Judgement.create!(item: item_with_associations, purchase_status: :considering) }
-      let!(:reminder) { Reminder.create!(item: item_with_associations, remind_at: 1.day.from_now, remind_interval: 1) }
+      let!(:reminder) { Reminder.create!(item: item_with_associations, remind_at: 1.day.from_now, remind_interval: 60) }
       let!(:reason) { Reason.create!(item: item_with_associations, purchase_reason: "買う理由") }
 
       it "item を削除すると judgement/reminder/reason も削除される" do

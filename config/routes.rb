@@ -22,4 +22,11 @@ Rails.application.routes.draw do
   end
 
   resources :judgements, only: %i[index]
+
+  resources :categories, only: %i[index new create destroy] do
+    collection do
+      # カテゴリー選択のモーダルのコンテンツを Turbo Frame経由で返す
+      get :modal
+    end
+  end
 end

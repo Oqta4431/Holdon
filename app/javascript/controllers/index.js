@@ -12,3 +12,6 @@ application.register("flip", FlipController)
 import RemindIntervalController from "./remind_interval_controller"
 application.register("remind-interval", RemindIntervalController)
 
+import CategorySelectorController from "./category_selector_controller"
+application.register("category-selector", CategorySelectorController)
+

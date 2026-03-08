@@ -1,0 +1,36 @@
+<div class="min-h-[70vh] bg-base-200/30">
+  <div class="mx-auto w-full max-w-md px-4 py-6">
+
+    <%# return_to が有効な場合はそこへ、なければ商品一覧へ戻る %>
+    <%= link_to @return_to || items_path, class: "btn btn-ghost btn-square" do %>
+      <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    <% end %>
+
+    <h1 class="text-xl font-bold mt-4">カテゴリーを追加</h1>
+
+    <%= form_with model: @category, class: "mt-6 space-y-5" do |f| %>
+      <%# カテゴリー作成後に return_to へリダイレクトするため、URL を hidden field で保持する %>
+      <%= hidden_field_tag :return_to, @return_to %>
+
+      <div>
+        <%= f.text_field :name,
+              class: "w-full bg-transparent outline-none py-2 border-b border-base-content/30 focus:border-base-content placeholder:text-base-content/40",
+              placeholder: "カテゴリー名（例：ファッション）",
+              maxlength: 30,
+              autofocus: true %>
+
+        <% if @category.errors[:name].any? %>
+          <p class="mt-1 text-sm text-error"><%= @category.errors[:name].first %></p>
+        <% end %>
+      </div>
+
+      <div class="pt-2">
+        <%= f.submit "保存", class: "btn w-full bg-primary text-primary-content hover:bg-primary/90 border-none" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

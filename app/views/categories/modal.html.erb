@@ -1,0 +1,50 @@
+<%# カテゴリー選択モーダルのコンテンツ。Turbo Frame 経由で items/new・edit から呼び出される。 %>
+<%# turbo-frame id は呼び出し元のフレームと一致させる必要がある。 %>
+<turbo-frame id="category_modal_frame">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg mb-4">カテゴリーを選択</h3>
+
+    <ul class="space-y-1">
+      <%# 「なし」を選択すると category_id が空文字になり、DB上は NULL として保存される %>
+      <li>
+        <button type="button"
+                class="w-full text-left px-3 py-2 rounded-box hover:bg-base-200 text-base-content/60"
+                data-action="category-selector#selectCategory"
+                data-category-id=""
+                data-category-name="">
+          なし
+        </button>
+      </li>
+
+      <% @categories.each do |category| %>
+        <li>
+          <button type="button"
+                  class="w-full text-left px-3 py-2 rounded-box hover:bg-base-200"
+                  data-action="category-selector#selectCategory"
+                  data-category-id="<%= category.id %>"
+                  data-category-name="<%= category.name %>">
+            <%= category.name %>
+          </button>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="divider"></div>
+
+    <div class="flex flex-col gap-2">
+      <%# data-turbo-frame="_top" でフレーム内遷移ではなくページ全体を遷移させる %>
+      <%= link_to "カテゴリーを追加", new_category_path(return_to: @return_to),
+            class: "btn btn-outline btn-sm w-full",
+            data: { turbo_frame: "_top" } %>
+      <%# return_to を引き継ぐことで管理画面の戻るボタンが元のフォームへ戻れるようにする %>
+      <%= link_to "カテゴリーの管理", categories_path(return_to: @return_to),
+            class: "btn btn-ghost btn-sm w-full",
+            data: { turbo_frame: "_top" } %>
+    </div>
+  </div>
+
+  <%# モーダル外クリックで閉じるための透明な backdrop %>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</turbo-frame>

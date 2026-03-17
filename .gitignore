@@ -41,3 +41,6 @@
 
 .DS_Store
 /vendor/bundle
+
+# ドキュメント（インタビュー・マニュアル）はリポジトリ非公開
+/docs

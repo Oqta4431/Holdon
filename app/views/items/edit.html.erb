@@ -120,26 +120,45 @@
           </div>
         </div>
 
-        <!-- カテゴリ（ダミー） -->
-        <div class="space-y-2">
+        <!-- カテゴリー選択（Stimulus + daisyUI dialog + Turbo Frame） -->
+        <!-- category-selector コントローラーが dialog の開閉と hidden field の更新を管理する -->
+        <div data-controller="category-selector">
           <div class="flex items-start gap-3">
             <!-- Category icon (Heroicons) -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
-                  class="h-6 w-6"
-              >
-                <path fill="currentColor"
-                  d="M3.75 3A1.75 1.75 0 0 0 2 4.75v3.26a3.24 3.24 0 0 1 1.75-.51h12.5c.644 0 1.245.188 1.75.51V6.75A1.75 1.75 0 0 0 16.25 5h-4.836a.25.25 0 0 1-.177-.073L9.823 3.513A1.75 1.75 0 0 0 8.586 3zm0 6A1.75 1.75 0 0 0 2 10.75v4.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0 0 18 15.25v-4.5A1.75 1.75 0 0 0 16.25 9z"
-                />
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
+                class="h-6 w-6 shrink-0 mt-2"
+            >
+              <path fill="currentColor"
+                d="M3.75 3A1.75 1.75 0 0 0 2 4.75v3.26a3.24 3.24 0 0 1 1.75-.51h12.5c.644 0 1.245.188 1.75.51V6.75A1.75 1.75 0 0 0 16.25 5h-4.836a.25.25 0 0 1-.177-.073L9.823 3.513A1.75 1.75 0 0 0 8.586 3zm0 6A1.75 1.75 0 0 0 2 10.75v4.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0 0 18 15.25v-4.5A1.75 1.75 0 0 0 16.25 9z"
+              />
+            </svg>
 
             <div class="flex-1">
-              <input
-                type="text"
-                class="w-full bg-transparent outline-none py-2 border-b border-base-content/30 placeholder:text-base-content/40
-                      cursor-not-allowed opacity-70"
-                placeholder="カテゴリ（未実装）"
-                disabled
-              />
+              <%# タップするとモーダルが開く。選択後はラベルと hidden field が Stimulus で更新される %>
+              <button type="button"
+                      class="w-full text-left bg-transparent outline-none py-2 border-b border-base-content/30"
+                      data-action="category-selector#openModal">
+                <span data-category-selector-target="label"
+                      class="<%= @selected_category ? '' : 'text-base-content/40' %>">
+                  <%= @selected_category&.name || "カテゴリー" %>
+                </span>
+              </button>
+
+              <%# フォーム送信時に category_id を渡すための hidden field %>
+              <input type="hidden"
+                     name="item[category_id]"
+                     value="<%= @selected_category&.id %>"
+                     data-category-selector-target="field">
+
+              <%# daisyUI v5 モーダル。コンテンツは Turbo Frame で /categories/modal から遅延ロードする %>
+              <dialog data-category-selector-target="dialog" class="modal">
+                <turbo-frame id="category_modal_frame"
+                             src="<%= modal_categories_path(return_to: request.fullpath) %>">
+                  <div class="modal-box flex items-center justify-center min-h-20">
+                    <span class="loading loading-spinner loading-md"></span>
+                  </div>
+                </turbo-frame>
+              </dialog>
             </div>
           </div>
         </div>

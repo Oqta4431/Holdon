@@ -33,6 +33,8 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
+    # カテゴリー新規作成後のリダイレクトで来た場合、selected_category_id で選択状態を復元する
+    @selected_category = current_user.categories.find_by(id: params[:selected_category_id])
   end
 
   def create
@@ -61,6 +63,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    # 編集中にカテゴリーを新規作成して戻ってきた場合は params を優先し、
+    # なければ商品に紐づく既存のカテゴリーを使う
+    @selected_category = current_user.categories.find_by(id: params[:selected_category_id]) || @item.category
   end
 
   def update
@@ -87,7 +92,8 @@ class ItemsController < ApplicationController
 
   def item_params
     # Item モデルの属性のみを許可する（remind_interval は reminders テーブルのカラムのため含めない）
-    params.require(:item).permit(:name, :price, :url, :memo, :item_image)
+    # Item モデルの属性のみを許可する（remind_interval は reminders テーブルのカラムのため含めない）
+    params.require(:item).permit(:name, :price, :url, :memo, :item_image, :category_id)
   end
 
   def remind_interval_param

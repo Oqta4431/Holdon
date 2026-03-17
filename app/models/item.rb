@@ -31,6 +31,8 @@ class Item < ApplicationRecord
   validates :memo, length: { maximum: 65_535 }, allow_blank: true
 
   belongs_to :user
+  # カテゴリーは任意（未分類の商品も登録できる）
+  belongs_to :category, optional: true
 
   has_one :judgement, dependent: :destroy
   has_one :reminder, dependent: :destroy

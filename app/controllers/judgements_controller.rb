@@ -21,7 +21,8 @@ class JudgementsController < ApplicationController
         # 再検討時：現在のremind_atを履歴としてpast_remindersに保存してから更新する
         item.reminder.past_reminders.create!(past_remind_at: item.reminder.remind_at)
 
-        remind_interval = judgement_params[:remind_interval].to_i
+        # remind_intervalが未指定（items/showの「検討中に戻す」など）はデフォルト値を使用
+        remind_interval = judgement_params[:remind_interval].presence&.to_i || REMIND_INTERVAL.to_i
         # 起算点はdecided_at(判断した時刻)
         item.reminder.update!(
           remind_at: judgement.decided_at + remind_interval.seconds,

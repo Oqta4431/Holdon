@@ -1,4 +1,8 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans JP", ui-sans-serif, system-ui, sans-serif;
+}
 @plugin "daisyui"{
   themes: ["Holdon"];
 }
@@ -8,9 +12,9 @@
   default: true;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: #FAFAF7;
-  --color-base-200: #FAFAF7;
-  --color-base-300: #FAFAF7;
+  --color-base-100: #FAFAF7;   /* カード・入力欄（白系） */
+  --color-base-200: #F0EDE6;   /* アプリ本体の背景（薄いベージュ） */
+  --color-base-300: #E3DDD2;   /* ボーダー・区切り線 */
   --color-base-content: oklch(21% 0.034 264.665);
 
   --color-primary: #A8C3A0;
@@ -37,9 +41,9 @@
   --color-error: #D08A84;
   --color-error-content: #333333;
 
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.25rem;
+  --radius-box: 1.25rem;
+  --radius-field: 0.5rem;
+  --radius-selector: 1rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;

@@ -9,6 +9,9 @@
 
     <%= yield :head %>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -19,7 +22,8 @@
   </head>
 
   <!-- 表示領域を画面に合わせて固定してスクロールを抑制する -->
-  <body class="fixed top-0 bottom-0 left-0 right-0 bg-secondary">
+  <body class="fixed top-0 bottom-0 left-0 right-0"
+        style="background: linear-gradient(180deg, var(--color-secondary) 0%, color-mix(in oklab, var(--color-base-100) 85%, var(--color-primary) 15%) 100%);">
 
     <!-- ② 画面中央にスマホ幅のアプリ本体を置くコンテナ -->
     <div class="flex flex-col items-center">

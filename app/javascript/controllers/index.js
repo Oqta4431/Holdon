@@ -15,3 +15,6 @@ application.register("remind-interval", RemindIntervalController)
 import CategorySelectorController from "./category_selector_controller"
 application.register("category-selector", CategorySelectorController)
 
+import ExpandController from "./expand_controller"
+application.register("expand", ExpandController)
+

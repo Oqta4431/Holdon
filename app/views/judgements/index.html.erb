@@ -1,20 +1,34 @@
-<div class="min-h-screen bg-[#efe3b8] px-4 pb-28">
-  <% if @item.present? %>
+<% if @item.present? %>
+<%# 商品カードのスクロールエリア。固定ボタンカードの高さ分だけ余白を追加 %>
+<div class="pb-44">
     <div class="max-w-md mx-auto pt-6" data-controller="flip">
-      <div class="bg-[#d9d9d9] border border-base-300 rounded-2xl shadow-sm p-4 relative block" data-flip-target="front">
+      <div class="bg-base-100 border border-base-300 rounded-2xl shadow-md p-4 pb-14 relative block" data-flip-target="front">
         <% if @item.item_image.attached? %>
           <%= image_tag @item.item_image.variant(:large), class: "w-full h-60 object-cover rounded-xl mb-6" %>
         <% else %>
-          <div class="w-full h-60 bg-[#cfcfcf] rounded-xl flex items-center justify-center text-2xl font-black text-base-content/80 mb-6">
+          <div class="w-full h-60 bg-base-200 rounded-xl flex items-center justify-center text-2xl font-black text-base-content/80 mb-6">
             画像
           </div>
         <% end %>
 
-        <h2 class="text-2xl font-black leading-tight mb-2"><%= @item.name %></h2>
+        <%# 長い商品名は2行で省略して表示 %>
+        <h2 class="text-2xl font-black leading-tight mb-2 line-clamp-2"><%= @item.name %></h2>
         <p class="text-lg font-semibold text-base-content/90 mb-2">¥<%= number_with_delimiter(@item.price) %></p>
 
         <% if @item.memo.present? %>
-          <p class="text-sm text-base-content/70"><%= simple_format(@item.memo) %></p>
+          <%# expand コントローラーで4行折りたたみ＋「続きを表示」トグルを制御 %>
+          <div data-controller="expand">
+            <%#
+              simple_format は <p> タグを生成するため line-clamp と相性が悪い。
+              whitespace-pre-wrap で改行を保持しつつ、単一要素に line-clamp-4 を適用する。
+            %>
+            <p class="text-sm text-base-content/70 whitespace-pre-wrap line-clamp-4"
+               data-expand-target="text"><%= @item.memo %></p>
+            <button type="button"
+                    class="text-xs text-primary mt-1"
+                    data-expand-target="toggle"
+                    data-action="click->expand#expand">続きを表示</button>
+          </div>
         <% end %>
 
         <button type="button" data-action="flip#toggle" class="btn btn-sm btn-outline btn-circle w-10 h-10 border-base-content/40 shadow-sm absolute bottom-3 right-3">
@@ -22,7 +36,7 @@
         </button>
       </div>
 
-      <div class="bg-[#d9d9d9] border border-base-300 rounded-2xl shadow-sm p-4 relative hidden" data-flip-target="back">
+      <div class="bg-base-100 border border-base-300 rounded-2xl shadow-md p-4 pb-14 relative hidden" data-flip-target="back">
         <div class="text-sm font-bold mb-3">理由メモ</div>
         <%= render "items/reason_memo_readonly", reason: @item.reason %>
 
@@ -31,69 +45,95 @@
         </button>
       </div>
     </div>
+</div>
+<% else %>
+  <%# 商品がない場合はスクロールなしで画面を埋めて表示。main が flex-1 で確定高さを持つため min-h-full が解決される %>
+  <div class="min-h-full flex flex-col items-center justify-center text-base-content/60 bg-base-100 border border-base-300 shadow-md rounded-2xl">
+    <div class="text-6xl mb-4">👐</div>
+    <p class="text-lg font-semibold">判断する商品はありません</p>
+  </div>
+<% end %>
 
-    <div class="sticky bottom-20 z-10 mt-4">
-      <div class="max-w-md mx-auto bg-base-100 border border-base-300 rounded-2xl p-4">
-        <div class="flex items-center justify-between">
-          <%= button_to item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :skipped }, redirect_to: judgements_path }, class: "w-20 h-20 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-4xl font-black text-[#9dbbd3] shadow-sm" do %>
-            <span aria-hidden="true">✕</span>
-            <span class="sr-only">見送り</span>
-          <% end %>
+<%# フッター上部に固定表示するボタンカード %>
+<% if @item.present? %>
+  <%#
+    再検討フォーム（id="reconsider-form"）。
+    送信ボタンは下のフレックス行に配置し、form属性でこのフォームに紐付ける。
+    セレクトUIも同じ data-controller スコープ内に置くため、
+    Stimulus コントローラーは外側の div に設定する。
+  %>
+  <div data-controller="remind-interval">
+    <%= form_with url: item_judgement_path(@item), method: :patch, id: "reconsider-form" do %>
+      <%= hidden_field_tag "judgement[purchase_status]", :considering %>
+      <%= hidden_field_tag :redirect_to, judgements_path %>
+      <%# Stimulus コントローラーが calculate() で更新する隠しフィールド %>
+      <%= hidden_field_tag "judgement[remind_interval]", Reminder::DEFAULT_REMIND_INTERVAL,
+            data: { "remind-interval-target": "seconds" } %>
+    <% end %>
 
-          <!-- 再検討ボタン：リマインド期間を選択してから再検討できるようフォームに変更 -->
-          <%= form_with url: item_judgement_path(@item), method: :patch,
-                data: { controller: "remind-interval" } do |f| %>
-            <%= hidden_field_tag "judgement[purchase_status]", :considering %>
-            <%= hidden_field_tag :redirect_to, judgements_path %>
+    <div class="fixed bottom-24 left-1/2 -translate-x-1/2 w-full max-w-md px-4 z-40">
+      <div class="bg-base-100 border border-base-300 rounded-2xl p-4">
 
-            <!-- リマインド期間ピッカー（数値 × 単位） -->
-            <div class="flex items-center justify-center gap-2 mb-3">
-              <select
-                class="select select-bordered select-sm"
-                data-remind-interval-target="value"
-                data-action="change->remind-interval#calculate"
-              >
-                <% (1..60).each do |n| %>
-                  <option value="<%= n %>" <%= "selected" if n == 24 %>><%= n %></option>
-                <% end %>
-              </select>
-
-              <select
-                class="select select-bordered select-sm"
-                data-remind-interval-target="unit"
-                data-action="change->remind-interval#calculate"
-              >
-                <option value="minutes">分</option>
-                <option value="hours" selected>時間</option>
-                <option value="days">日</option>
-              </select>
-
-              <%= hidden_field_tag "judgement[remind_interval]", Reminder::DEFAULT_REMIND_INTERVAL,
-                    data: { "remind-interval-target": "seconds" } %>
-            </div>
-
-            <!-- 再検討ボタン -->
-            <%= f.button type: :submit,
-                  class: "w-20 h-20 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-4xl
-          font-black text-[#7bb08a] shadow-sm" do %>
-              <span aria-hidden="true">↻</span>
-              <span class="sr-only">再検討</span>
+        <%# リマインド期間ピッカー（中央寄せ） %>
+        <div class="flex items-center justify-center gap-2 mb-3">
+          <select
+            class="select select-bordered select-sm"
+            data-remind-interval-target="value"
+            data-action="change->remind-interval#calculate"
+          >
+            <% (1..60).each do |n| %>
+              <option value="<%= n %>" <%= "selected" if n == 24 %>><%= n %></option>
             <% end %>
+          </select>
+
+          <select
+            class="select select-bordered select-sm"
+            data-remind-interval-target="unit"
+            data-action="change->remind-interval#calculate"
+          >
+            <option value="minutes">分</option>
+            <option value="hours" selected>時間</option>
+            <option value="days">日</option>
+          </select>
+        </div>
+
+        <%# 3択ボタン行。再検討ボタンは form属性で #reconsider-form に紐付け %>
+        <div class="flex items-center justify-around">
+
+          <%# 見送りボタン %>
+          <%= button_to item_judgement_path(@item), method: :patch,
+                params: { judgement: { purchase_status: :skipped }, redirect_to: judgements_path },
+                class: "w-16 h-16 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-[#9dbbd3] shadow-sm" do %>
+            <span class="sr-only">見送り</span>
+            <%# Heroicons outline: x-mark %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
           <% end %>
 
-          <%= button_to item_judgement_path(@item), method: :patch, params: { judgement: { purchase_status: :purchased }, redirect_to: judgements_path }, class: "w-20 h-20 rounded-full border-2 border-[#c97b7b] bg-white flex items-center justify-center text-4xl font-black text-[#c97b7b] shadow-sm" do %>
-            <span aria-hidden="true">◯</span>
+          <%# 再検討ボタン（form属性で #reconsider-form の送信ボタンとして機能） %>
+          <button type="submit" form="reconsider-form"
+            class="w-16 h-16 rounded-full border-2 border-base-content/70 bg-white flex items-center justify-center text-[#7bb08a] shadow-sm">
+            <span class="sr-only">再検討</span>
+            <%# Heroicons outline: arrow-path %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </button>
+
+          <%# 購入ボタン %>
+          <%= button_to item_judgement_path(@item), method: :patch,
+                params: { judgement: { purchase_status: :purchased }, redirect_to: judgements_path },
+                class: "w-16 h-16 rounded-full border-2 border-[#c97b7b] bg-white flex items-center justify-center text-[#c97b7b] shadow-sm" do %>
             <span class="sr-only">購入</span>
+            <%# Heroicons outline: check-circle %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+            </svg>
           <% end %>
+
         </div>
       </div>
     </div>
-  <% else %>
-    <div class="max-w-md mx-auto pt-10">
-      <div class="h-[70vh] flex flex-col items-center justify-center text-base-content/60 bg-[#d9d9d9] rounded-2xl border border-base-300">
-        <div class="text-6xl mb-4">👐</div>
-        <p class="text-lg font-semibold">判断する商品はありません</p>
-      </div>
-    </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

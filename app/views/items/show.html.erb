@@ -90,11 +90,6 @@
               ¥ <%= number_with_delimiter(@item.price) %>
             </div>
 
-            <!-- ⚠️デバッグ用、レビュー依頼出す前に消すこと！⚠️-->
-            <div class="mt-1 text-sm font-semibold">
-              状態：<%= @item.judgement.purchase_status || "nilですね...😔" %>
-            </div>
-
             <% if @item.url.present? %>
               <div class="mt-1 text-xs text-base-content/60">
                 タップで商品ページへ

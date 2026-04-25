@@ -71,3 +71,7 @@ gem "tailwindcss-rails"
 gem "devise"
 
 gem "aws-sdk-s3", require: false
+
+#line認証実装のために追加
+gem 'omniauth-line'
+gem 'omniauth-rails_csrf_protection'

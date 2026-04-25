@@ -4,7 +4,7 @@ RSpec.describe "User", type: :system do
   context '未サインアップの場合' do
     it 'ユーザーが増えること' do
       visit root_path
-      expect{
+      expect {
         visit user_line_omniauth_callback_path
     }.to change(User, :count).by(1)
     end
@@ -23,7 +23,7 @@ RSpec.describe "User", type: :system do
 
     it 'ユーザーは増えないこと' do
       visit root_path
-      expect{
+      expect {
         visit user_line_omniauth_callback_path
     }.to_not change(User, :count)
     end

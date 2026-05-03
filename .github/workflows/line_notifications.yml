@@ -1,0 +1,23 @@
+name: line_notifications
+
+on:
+  schedule:
+  - cron: "*/5 * * * *" #5分ごとに
+  workflow_dispatch:
+
+jobs:
+  line_notifications:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.6
+          bundler-cache: true
+      - name: notify_on_line
+        run: bundle exec rake line_notifications:send_reminders

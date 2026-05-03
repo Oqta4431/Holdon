@@ -1,6 +1,5 @@
 require "rails_helper"
 RSpec.describe Reminder, type: :model do
-
   describe "unnotified_for_current_cycle" do
     context "notified_atとremind_atの比較" do
       it "notified_at IS NULLの時は判断対象に含む" do
@@ -25,5 +24,4 @@ RSpec.describe Reminder, type: :model do
       end
     end
   end
-
 end

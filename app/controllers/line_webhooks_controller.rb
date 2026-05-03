@@ -3,7 +3,7 @@ class LineWebhooksController < ApplicationController
 
   def callback
     body = request.body.read
-    signature = request.env['HTTP_X_LINE_SIGNATURE']
+    signature = request.env["HTTP_X_LINE_SIGNATURE"]
 
     begin
       webhook_parser.verify_signature(body: body, signature: signature)

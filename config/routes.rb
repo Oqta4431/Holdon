@@ -30,5 +30,5 @@ Rails.application.routes.draw do
   end
 
   # LINEメッセージ通知
-  post '/line/webhook', to: 'line_webhooks#callback'
+  post "/line/webhook", to: "line_webhooks#callback"
 end

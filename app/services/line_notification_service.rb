@@ -4,7 +4,7 @@ class LineNotificationService
   end
 
   def call
-    return unless @item.user.provider == 'line'
+    return unless @item.user.provider == "line"
 
     message_text = "まずは一旦テストです。\n商品名：#{@item.name}\nの判断の時間です。\n購入判断はこちらから：(HoldonのURL)"
 

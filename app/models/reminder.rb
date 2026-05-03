@@ -18,6 +18,6 @@ class Reminder < ApplicationRecord
   has_many :past_reminders, dependent: :destroy
 
   scope :unnotified_for_current_cycle, -> {
-    where(notified_at: nil).or(where('notified_at < remind_at'))
+    where(notified_at: nil).or(where("notified_at < remind_at"))
   }
 end

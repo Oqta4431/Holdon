@@ -78,4 +78,3 @@ gem "omniauth-rails_csrf_protection"
 
 # lineメッセージ通知のため追加
 gem "line-bot-api"
-

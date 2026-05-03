@@ -28,4 +28,7 @@ Rails.application.routes.draw do
       get :modal
     end
   end
+
+  # LINEメッセージ通知
+  post "/line/webhook", to: "line_webhooks#callback"
 end

@@ -16,4 +16,8 @@ class Reminder < ApplicationRecord
 
   # 再検討履歴：同じリマインダーに対して複数回の再検討が発生しうるため has_many
   has_many :past_reminders, dependent: :destroy
+
+  scope :unnotified_for_current_cycle, -> {
+    where(notified_at: nil).or(where("notified_at < remind_at"))
+  }
 end

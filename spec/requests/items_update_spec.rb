@@ -74,6 +74,7 @@ RSpec.describe "Items update", type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).not_to be_redirect
+        expect(flash[:error]).to eq("商品を編集できませんでした")
 
         item_a.reload
         expect(item_a.name).to eq(original["name"])
@@ -86,6 +87,7 @@ RSpec.describe "Items update", type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).not_to be_redirect
+        expect(flash[:error]).to eq("商品を編集できませんでした")
 
         item_a.reload
         expect(item_a.price).to eq(original["price"])

@@ -30,6 +30,7 @@ RSpec.describe "Items destroy", type: :request do
 
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(items_path)
+        expect(flash[:success]).to eq("商品を削除しました")
       end
     end
 

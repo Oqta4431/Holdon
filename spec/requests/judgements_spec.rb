@@ -56,6 +56,7 @@ RSpec.describe "Judgements update", type: :request do
         judgement.reload
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(judgements_path)
+        expect(flash[:success]).to eq("購入判断を更新しました")
         expect(judgement.purchase_status).to eq("purchased")
         expect(judgement.decided_at).not_to be_nil
       end
@@ -68,6 +69,7 @@ RSpec.describe "Judgements update", type: :request do
         judgement.reload
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(judgements_path)
+        expect(flash[:success]).to eq("購入判断を更新しました")
         expect(judgement.purchase_status).to eq("skipped")
         expect(judgement.decided_at).not_to be_nil
       end
@@ -88,6 +90,7 @@ RSpec.describe "Judgements update", type: :request do
 
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(judgements_path)
+          expect(flash[:success]).to eq("購入判断を更新しました")
           expect(reminder.remind_at).to be > remind_at_before
           expect(judgement.purchase_status).to eq("considering")
           expect(judgement.decided_at).not_to be_nil

@@ -40,6 +40,7 @@ RSpec.describe "Items create", type: :request do
         expect(created_item.user_id).to eq(user.id)
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(items_path)
+        expect(flash[:success]).to eq("商品を追加しました")
       end
     end
 
@@ -51,6 +52,7 @@ RSpec.describe "Items create", type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).not_to redirect_to(items_path)
+        expect(flash[:error]).to eq("商品を追加出来ませんでした")
       end
 
       it "price なしでは作成されない" do
@@ -60,6 +62,7 @@ RSpec.describe "Items create", type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).not_to redirect_to(items_path)
+        expect(flash[:error]).to eq("商品を追加出来ませんでした")
       end
     end
   end

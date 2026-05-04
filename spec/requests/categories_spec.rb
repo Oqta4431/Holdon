@@ -92,6 +92,7 @@ RSpec.describe "Categories", type: :request do
 
           created_category = Category.last
           expect(response).to redirect_to("#{new_item_path}?selected_category_id=#{created_category.id}")
+          expect(flash[:success]).to eq("カテゴリーを作成しました")
         end
 
         it "return_to が不正なURLの場合は items_path にリダイレクトされる" do
@@ -107,6 +108,7 @@ RSpec.describe "Categories", type: :request do
           end.not_to change(Category, :count)
 
           expect(response).to have_http_status(:unprocessable_entity)
+          expect(flash[:error]).to eq("カテゴリーを作成出来ませんでした")
         end
 
         it "name が30文字超では作成されない" do
@@ -115,6 +117,7 @@ RSpec.describe "Categories", type: :request do
           end.not_to change(Category, :count)
 
           expect(response).to have_http_status(:unprocessable_entity)
+          expect(flash[:error]).to eq("カテゴリーを作成出来ませんでした")
         end
 
         it "同一ユーザー内で name が重複する場合は作成されない" do
@@ -123,6 +126,7 @@ RSpec.describe "Categories", type: :request do
           end.not_to change(Category, :count)
 
           expect(response).to have_http_status(:unprocessable_entity)
+          expect(flash[:error]).to eq("カテゴリーを作成出来ませんでした")
         end
       end
     end
@@ -135,6 +139,7 @@ RSpec.describe "Categories", type: :request do
           end.to change(Category, :count).by(-1)
 
           expect(response).to redirect_to(categories_path)
+          expect(flash[:success]).to eq("カテゴリーを削除しました")
         end
 
         it "削除されたカテゴリーに紐づく Item の category_id が NULL になる" do

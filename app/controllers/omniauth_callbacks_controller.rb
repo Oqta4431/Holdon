@@ -4,10 +4,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @omniauth = request.env["omniauth.auth"]
       @profile = User.basic_action(@omniauth)
       sign_in(:user, @profile)
-      flash[:success] = t('omniauth_callbacks.line.success')
+      flash[:success] = t("omniauth_callbacks.line.success")
       redirect_to root_path
     rescue
-      flash[:error] = t('omniauth_callbacks.line.error')
+      flash[:error] = t("omniauth_callbacks.line.error")
       redirect_to root_path
     end
   end

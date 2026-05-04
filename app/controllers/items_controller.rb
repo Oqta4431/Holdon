@@ -55,9 +55,9 @@ class ItemsController < ApplicationController
     if @item.save
       # save完了後、created_atが確定するのでremind_atをcreated_atから再計算して更新する
       @item.reminder.update!(remind_at: @item.created_at + remind_interval.seconds)
-      redirect_to items_path, success: t('items.create.success')
+      redirect_to items_path, success: t("items.create.success")
     else
-      flash.now[:error] = t('items.create.error')
+      flash.now[:error] = t("items.create.error")
       render :new, status: :unprocessable_entity
     end
   end
@@ -76,16 +76,16 @@ class ItemsController < ApplicationController
         remind_at: Time.current + remind_interval.seconds,
         remind_interval: remind_interval_param
       )
-      redirect_to item_path(@item), success: t('items.update.success')
+      redirect_to item_path(@item), success: t("items.update.success")
     else
-      flash.now[:error] = t('items.update.error')
+      flash.now[:error] = t("items.update.error")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @item.destroy!
-    redirect_to items_path, success: t('items.destroy.success')
+    redirect_to items_path, success: t("items.destroy.success")
   end
 
   private

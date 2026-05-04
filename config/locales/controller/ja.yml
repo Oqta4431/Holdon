@@ -1,0 +1,28 @@
+ja:
+  categories:
+    create:
+      success: カテゴリーを作成しました
+      error: カテゴリーを作成出来ませんでした
+    destroy:
+      success: カテゴリーを削除しました
+  items:
+    create:
+      success: 商品を追加しました
+      error: 商品を追加出来ませんでした
+    update:
+      success: 商品を編集しました
+      error: 商品を編集できませんでした
+    destroy:
+      success: 商品を削除しました
+  judgements:
+    update:
+      success: 購入判断を更新しました
+  omniauth_callbacks:
+    line:
+      success: ログインしました
+      error: エラーが発生しました、再度やり直してください
+  reasons:
+    update:
+      success: 理由を保存しました
+      error: 理由を保存できませんでした
+      alert: 保存に失敗しました

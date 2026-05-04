@@ -1,0 +1,30 @@
+<div class="card bg-base-100 shadow-sm border">
+  <div class="card-body p-3">
+    <div class="flex gap-3 items-center">
+      <!-- 仮画像 -->
+      <div class="w-20 h-20 bg-base-200 rounded-box flex items-center justify-center shrink-0">
+        <% if item.item_image.attached? %>
+          <%= image_tag item.item_image.variant(:thumb), class: "w-full h-full object-cover rounded-box" %>
+        <% else %>
+          <span class="text-sm text-base-content/60">画像</span>
+        <% end %>
+      </div>
+
+      <div class="min-w-0">
+        <div class="font-bold text-base leading-tight line-clamp-2">
+          <%= item.name %>
+        </div>
+
+        <div class="mt-1 text-sm font-semibold">
+          ¥ <%= number_with_delimiter(item.price) %>
+        </div>
+
+        <% if item.url.present? %>
+          <div class="mt-1 text-xs text-base-content/60">
+            タップで商品ページへ
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

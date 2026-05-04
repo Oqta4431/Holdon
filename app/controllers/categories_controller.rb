@@ -25,17 +25,17 @@ class CategoriesController < ApplicationController
     @category = current_user.categories.build(category_params)
 
     if @category.save
-      redirect_to build_return_url(@category), success: "カテゴリーを作成しました"
+      redirect_to build_return_url(@category), success: t('categories.create.success')
     else
       @return_to = params[:return_to]
-      flash.now[:error] = "カテゴリーを作成出来ませんでした"
+      flash.now[:error] = t('categories.create.error')
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     @category.destroy!
-    redirect_to categories_path, success: "カテゴリーを削除しました"
+    redirect_to categories_path, success: t('categories.destroy.success')
   end
 
   private

@@ -61,11 +61,11 @@
   <%# item.url があるときだけリンク化 %>
   <% if @item.url.present? %>
     <%= link_to @item.url, target: "_blank", rel: "noopener noreferrer", class: "block" do %>
-      <%= render partial: "item_card", locals:{ item: @item } %>
+      <%= render partial: "items/item_card", locals:{ item: @item } %>
     <% end %>
   <% else %>
     <div>
-      <%= render partial: "item_card", locals:{ item: @item } %>
+      <%= render partial: "items/item_card", locals:{ item: @item } %>
     </div>
   <% end %>
 

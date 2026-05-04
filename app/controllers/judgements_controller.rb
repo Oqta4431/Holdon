@@ -35,7 +35,7 @@ class JudgementsController < ApplicationController
     ## 判断画面へ遷移 → 次の一件を取得して表示 → ステータス更新 → 判断画面へ遷移
     ## 判断対象がなくなるまでループする
     redirect_path = params[:redirect_to].presence
-    redirect_to redirect_path, notice: "購入判断を更新しました"
+    redirect_to redirect_path, success: t('judgements.update.success')
   end
 
   private

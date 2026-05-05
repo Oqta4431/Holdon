@@ -34,5 +34,4 @@ Rails.application.routes.draw do
 
   # プロフィール編集画面
   resource :profile, only: %i[show edit update]
-
 end

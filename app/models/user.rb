@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :categories, dependent: :destroy
 
+  validates :name, presence: true, length: { maximum: 20 }
+
   def self.basic_action(auth)
     if auth.present?
       prof = User.find_or_initialize_by(provider: auth["provider"], uid: auth["uid"])

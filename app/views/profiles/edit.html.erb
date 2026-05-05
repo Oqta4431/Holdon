@@ -1,0 +1,29 @@
+<div class="p-4 space-y-6">
+
+  <!-- ページタイトル -->
+  <div class="text-lg font-bold">ユーザー名の変更</div>
+
+  <!-- 編集フォームカード -->
+  <div class="card bg-base-100 shadow-sm border">
+    <div class="card-body p-4 space-y-4">
+
+      <%= form_with model: @user, url: profile_path, method: :patch do |f| %>
+        <div class="space-y-2">
+          <div class="text-xs text-base-content/50 font-medium">ユーザー名</div>
+          <%= f.text_field :name,
+                          class: "input input-bordered w-full",
+                          placeholder: "名前を入力してください" %>
+        </div>
+
+        <div class="pt-2">
+          <%= f.submit "保存する", class: "btn btn-primary w-full" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+
+  <!-- キャンセル -->
+  <%= link_to "キャンセル", profile_path, class: "btn btn-ghost w-full" %>
+
+</div>

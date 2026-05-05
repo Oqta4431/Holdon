@@ -1,0 +1,19 @@
+<div class="p-4 space-y-6">
+
+  <!-- ページタイトル -->
+  <div class="text-lg font-bold">プロフィール</div>
+
+  <!-- ユーザー名カード -->
+  <div class="card bg-base-100 shadow-sm border">
+    <div class="card-body p-4 space-y-1">
+      <div class="text-xs text-base-content/50 font-medium">ユーザー名</div>
+      <div class="text-base font-bold"><%= @user.name %></div>
+    </div>
+  </div>
+
+  <!-- 編集ボタン -->
+  <%= link_to edit_profile_path, class: "btn btn-primary w-full" do %>
+    編集する
+  <% end %>
+
+</div>

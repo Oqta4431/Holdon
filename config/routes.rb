@@ -31,4 +31,7 @@ Rails.application.routes.draw do
 
   # LINEメッセージ通知
   post "/line/webhook", to: "line_webhooks#callback"
+
+  # プロフィール編集画面
+  resource :profile, only: %i[show edit update]
 end

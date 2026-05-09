@@ -14,13 +14,13 @@ user = User.find(4)
   item = Item.create!(
     user: user,
     name: Faker::Commerce.product_name,
-    price:Faker::Commerce.price(range: 100..50000).to_i
+    price: Faker::Commerce.price(range: 100..50000).to_i
   )
 
   item.create_judgement!(purchase_status: :considering)
 
   item.judgement.update!(
     decided_at: 1.week.ago,
-    purchase_status: [ :purchased, :skipped].sample
+    purchase_status: [ :purchased, :skipped ].sample
   )
 end

@@ -63,8 +63,8 @@ class Item < ApplicationRecord
     .joins(:judgement)
     .left_outer_joins(:review)
     .where(judgements: { purchase_status: [ Judgement.purchase_statuses[:purchased], Judgement.purchase_statuses[:skipped] ] })
-    .where("judgements.decided_at >= ?", last_week_start )
-    .where("judgements.decided_at < ?", last_week_end )
+    .where("judgements.decided_at >= ?", last_week_start)
+    .where("judgements.decided_at < ?", last_week_end)
     .where.not(judgements: { decided_at: nil })
     .where(reviews: { id: nil })
   }

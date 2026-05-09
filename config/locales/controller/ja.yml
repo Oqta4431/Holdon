@@ -26,3 +26,11 @@ ja:
       success: 理由を保存しました
       error: 理由を保存できませんでした
       alert: 保存に失敗しました
+  item:
+    reviews:
+      new:
+        error: この商品はすでに振り返り済みです
+      create:
+        error: この商品はすでに振り返り済みです
+        success: 振り返りを保存しました
+        alert: 振り返りの保存に失敗しました

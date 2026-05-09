@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
     end
 
     base_scope = current_user.items
-                              .includes(:judgement)
+                              .includes(:judgement, :review)
                               .with_attached_item_image
                               .joins(:judgement)
                               .where(judgements: { purchase_status: @status })

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :items do
     resource :judgement, only: %i[update]
     resource :reason, only: %i[update]
+    resource :review, only: %i[new create], controller: "item/reviews"
   end
 
   resources :judgements, only: %i[index]

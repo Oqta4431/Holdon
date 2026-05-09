@@ -22,6 +22,9 @@ class HomeController < ApplicationController
       @skipped_ratio = (@skipped_price.to_f / @judged_price * 100).round(1)
     end
 
+    ## 振り返り対象アイテムの一覧を取得
+    @review_items = current_user.items.ready_for_review
+
     ## 判定待ちアイテムの一覧を取得
     ## enum purchase_status: { considering: 0, purchased: 1, skipped: 2 }
     @yet_to_judge = current_user.items

@@ -54,42 +54,99 @@
 </div>
 
 
-  <!-- 商品カード -->
+<!-- 判断予定セクション -->
+<div class="w-full max-w-md mx-auto px-4 pt-2 pb-1">
+  <p class="text-sm font-bold text-base-content/70">判断予定のアイテム</p>
+</div>
+<% if @yet_to_judge.present? %>
   <% @yet_to_judge.each do |item| %>
-  <li class="list-none">
-    <%= link_to judgements_path, class: "block" do %>
-      <div class="card bg-base-100 shadow-sm border">
-        <div class="card-body p-3">
-          <div class="flex gap-3 items-center">
-            <!-- 仮画像 -->
-            <div class="w-20 h-20 bg-gray-200 rounded-box flex items-center justify-center shrink-0">
-              <% if item.item_image.attached? %>
-                <%= image_tag item.item_image.variant(:thumb), class: "w-full h-full object-cover rounded-box" %>
-              <% else %>
-                <span class="text-sm text-base-content/60">画像</span>
-              <% end %>
-            </div>
-
-            <div class="min-w-0">
-              <div class="font-bold text-base leading-tight line-clamp-2">
-                <%= item.name %>
-              </div>
-
-              <div class="mt-1 text-sm font-semibold">
-                ¥ <%= number_with_delimiter(item.price) %>
-              </div>
-              <div class="mt-1 text-sm font-semibold">
-                <% if item.reminder.remind_at < Time.current %>
-                  今すぐ判定出来ます
+    <li class="list-none px-4 pb-2">
+      <%= link_to judgements_path, class: "block" do %>
+        <div class="card bg-base-100 shadow-sm border">
+          <div class="card-body p-3">
+            <div class="flex gap-3 items-center">
+              <div class="w-20 h-20 bg-base-200 rounded-box flex items-center justify-center shrink-0">
+                <% if item.item_image.attached? %>
+                  <%= image_tag item.item_image.variant(:thumb), class: "w-full h-full object-cover rounded-box" %>
                 <% else %>
-                  <%= distance_of_time_in_words_to_now(item.reminder.remind_at) %>後に判定予定
+                  <span class="text-sm text-base-content/60">画像</span>
                 <% end %>
               </div>
+              <div class="min-w-0 flex-1">
+                <div class="font-bold text-base leading-tight line-clamp-2"><%= item.name %></div>
+                <div class="mt-1 text-sm font-semibold">¥ <%= number_with_delimiter(item.price) %></div>
+                <div class="mt-1 text-sm font-semibold">
+                  <% if item.reminder.remind_at < Time.current %>
+                    <span class="text-primary font-bold">今すぐ判定できます</span>
+                  <% else %>
+                    <%= distance_of_time_in_words_to_now(item.reminder.remind_at) %>後に判定予定
+                  <% end %>
+                </div>
+              </div>
             </div>
-
           </div>
         </div>
+      <% end %>
+    </li>
+  <% end %>
+<% else %>
+  <li class="list-none px-4 pb-2">
+    <div class="card bg-base-100 shadow-sm border">
+      <div class="card-body p-3">
+        <div class="flex gap-3 items-center h-20 text-base-content/40">
+          <span class="text-sm">判断予定のアイテムはありません</span>
+        </div>
       </div>
-    <% end %>
+    </div>
+  </li>
+<% end %>
+
+<!-- 振り返りセクション -->
+<div class="w-full max-w-md mx-auto px-4 pt-2 pb-1">
+  <p class="text-sm font-bold text-base-content/70">買い物を振り返りましょう</p>
+</div>
+<% if @review_items.present? %>
+  <% @review_items.each do |item| %>
+    <li class="list-none px-4 pb-2">
+      <%= link_to new_item_review_path(item), class: "block" do %>
+        <div class="card bg-base-100 shadow-sm border">
+          <div class="card-body p-3">
+            <div class="flex gap-3 items-center">
+              <div class="w-20 h-20 bg-base-200 rounded-box flex items-center justify-center shrink-0">
+                <% if item.item_image.attached? %>
+                  <%= image_tag item.item_image.variant(:thumb), class: "w-full h-full object-cover rounded-box" %>
+                <% else %>
+                  <span class="text-sm text-base-content/60">画像</span>
+                <% end %>
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="font-bold text-base leading-tight line-clamp-2"><%= item.name %></div>
+                <div class="mt-1 text-sm font-semibold">¥ <%= number_with_delimiter(item.price) %></div>
+                <div class="mt-1">
+                  <% if item.judgement.purchased? %>
+                    <span class="badge badge-error badge-sm text-white">購入</span>
+                  <% else %>
+                    <span class="badge badge-ghost badge-sm">見送り</span>
+                  <% end %>
+                </div>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-base-content/30 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+<% else %>
+  <li class="list-none px-4 pb-2">
+    <div class="card bg-base-100 shadow-sm border">
+      <div class="card-body p-3">
+        <div class="flex gap-3 items-center h-20 text-base-content/40">
+          <span class="text-sm">振り返るアイテムはありません</span>
+        </div>
+      </div>
+    </div>
   </li>
 <% end %>

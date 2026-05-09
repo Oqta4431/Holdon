@@ -1,0 +1,76 @@
+<div class="p-4 space-y-6">
+
+  <!-- 戻るボタン -->
+  <%= link_to root_path, class: "btn btn-ghost btn-square" do %>
+    <svg
+      class="h-8 w-8 text-color-neutral-content"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  <% end %>
+
+  <!-- 商品情報 -->
+  <div class="card bg-base-100 shadow-sm border">
+    <div class="card-body p-3">
+      <div class="flex gap-3 items-center">
+        <div class="w-20 h-20 bg-base-200 rounded-box flex items-center justify-center shrink-0">
+          <% if @item.item_image.attached? %>
+            <%= image_tag @item.item_image.variant(:thumb), class: "w-full h-full object-cover rounded-box" %>
+          <% else %>
+            <span class="text-sm text-base-content/60">画像</span>
+          <% end %>
+        </div>
+        <div class="min-w-0">
+          <div class="font-bold text-base leading-tight line-clamp-2"><%= @item.name %></div>
+          <div class="mt-1 text-sm font-semibold">¥ <%= number_with_delimiter(@item.price) %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- レビューフォーム -->
+  <%= form_with url: item_review_path(@item), model: @review, class: "space-y-6" do |f| %>
+
+    <!-- 満足度 -->
+    <div class="space-y-3">
+      <p class="text-xl font-bold text-center leading-snug">納得の行く判断は<br>できましたか？</p>
+      <div class="flex justify-center">
+        <div class="rating rating-lg gap-1">
+          <%= f.radio_button :satisfaction_score, 1, class: "mask mask-heart bg-red-300" %>
+          <%= f.radio_button :satisfaction_score, 2, class: "mask mask-heart bg-red-400" %>
+          <%= f.radio_button :satisfaction_score, 3, class: "mask mask-heart bg-red-500" %>
+          <%= f.radio_button :satisfaction_score, 4, class: "mask mask-heart bg-red-600" %>
+          <%= f.radio_button :satisfaction_score, 5, class: "mask mask-heart bg-red-700" %>
+        </div>
+      </div>
+      <% if @review.errors[:satisfaction_score].any? %>
+        <p class="text-error text-xs text-center"><%= @review.errors[:satisfaction_score].first %></p>
+      <% end %>
+    </div>
+
+    <!-- コメント -->
+    <div class="space-y-2">
+      <div class="text-xs text-base-content/50 font-medium">コメント</div>
+      <%= f.text_area :comment,
+            class: "textarea textarea-bordered w-full text-sm",
+            rows: 5,
+            placeholder: "コメントをここに書きますコメントをここに書きます..." %>
+      <% if @review.errors[:comment].any? %>
+        <p class="text-error text-xs"><%= @review.errors[:comment].first %></p>
+      <% end %>
+    </div>
+
+    <!-- ボタン -->
+    <div class="flex gap-3">
+      <%= link_to "キャンセル", root_path, class: "btn btn-outline flex-1" %>
+      <%= f.submit "OK", class: "btn btn-primary flex-1" %>
+    </div>
+
+  <% end %>
+
+</div>

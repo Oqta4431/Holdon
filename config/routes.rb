@@ -35,4 +35,8 @@ Rails.application.routes.draw do
 
   # プロフィール編集画面
   resource :profile, only: %i[show edit update]
+
+  # 静的ページ
+  get "terms"   => "pages#terms",   as: :terms
+  get "privacy" => "pages#privacy", as: :privacy
 end

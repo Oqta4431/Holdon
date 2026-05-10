@@ -15,17 +15,16 @@ class ReviewLineNotificationService
     end.join("\n")
 
     message_text = <<~TEXT
-    先週の自分に、問いかけてみましょう。
+      📊 先週の振り返りです
 
-    あなたは先週、#{items.count}件の買い物を熟考しました。
+      あなたは#{items.count}件の買い物を熟考しました。
 
-    #{item_lines}
+      #{item_lines}
 
-    あの時の決断、今の自分はどう感じていますか？
-    少しだけ時間をとって、記録してみましょう。
+      あの時の決断、今の自分はどう感じていますか？
+      少しだけ時間をとって、記録してみましょう。
 
-    ▶ 振り返りはこちら
-    holdon-app.com
+      ▶ 振り返りはこちら：holdon-app.com
     TEXT
 
     push_request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(

@@ -6,7 +6,7 @@ class LineNotificationService
   def call
     return unless @item.user.provider == "line"
 
-    message_text = "まずは一旦テストです。\n商品名：#{@item.name}\nの判断の時間です。\n購入判断はこちらから：(HoldonのURL)"
+    message_text = "📦 Holdonからお知らせ\n\n「#{@item.name}」の判断タイムです！\n\n少し時間が経った今、どう思いますか？\nぜひ確認してみてください👇\n\n▶ 購入判断はこちら：(HoldonのURL)"
 
     push_request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
       to: @item.user.uid,

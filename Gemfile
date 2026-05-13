@@ -78,3 +78,6 @@ gem "omniauth-rails_csrf_protection"
 
 # lineメッセージ通知のため追加
 gem "line-bot-api"
+
+# distance_of_time_in_words_to_nowの日本語表示のために追加
+gem "rails-i18n"

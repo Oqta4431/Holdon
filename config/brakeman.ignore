@@ -1,0 +1,73 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "0bf9c4f4bbbc80ad023297a6cf289ff5eaecf70128bfd11ff7816f1f46aed870",
+      "check_name": "LinkToHref",
+      "message": "Unsafe parameter value in `link_to` href",
+      "file": "app/views/categories/index.html.erb",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to((params[:return_to] or items_path), :class => \"btn btn-ghost btn-square\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "CategoriesController",
+          "method": "index",
+          "line": 13,
+          "file": "app/controllers/categories_controller.rb",
+          "rendered": {
+            "name": "categories/index",
+            "file": "app/views/categories/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "categories/index"
+      },
+      "user_input": "params[:return_to]",
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ],
+      "note": "valid_return_to?にてXSS対策は実施済み"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "ee7f0eda7a36134dc0ec71d662c3b63f84c2d929eaf44cc4601854f36d7e1ec0",
+      "check_name": "LinkToHref",
+      "message": "Unsafe parameter value in `link_to` href",
+      "file": "app/views/categories/new.html.erb",
+      "line": 5,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to((params[:return_to] or items_path), :class => \"btn btn-ghost btn-square\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "CategoriesController",
+          "method": "create",
+          "line": 30,
+          "file": "app/controllers/categories_controller.rb",
+          "rendered": {
+            "name": "categories/new",
+            "file": "app/views/categories/new.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "categories/new"
+      },
+      "user_input": "params[:return_to]",
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ],
+      "note": "valid_return_to?にてXSS対策は実施済み"
+    }
+  ],
+  "brakeman_version": "7.1.1"
+}

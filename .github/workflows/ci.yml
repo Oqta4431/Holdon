@@ -30,8 +30,7 @@ jobs:
           ruby-version: 3.3.6
           bundler-cache: true
       - name: Run Brakeman
-        run: bundle exec brakeman -q
-        continue-on-error: true  ## ⚠️エラーを一通り潰し終わったらこれは消すこと⚠️
+        run: bundle exec brakeman -q -i config/brakeman.ignore
 
   test:
     runs-on: ubuntu-latest

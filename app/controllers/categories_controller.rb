@@ -1,22 +1,20 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_category, only: %i[destroy]
+  before_action :set_return_to, only: %i[modal index new]
 
   def modal
     # current_user のカテゴリーのみ取得（他ユーザーのカテゴリーは参照不可）
     @categories = current_user.categories.order(:name)
-    @return_to = params[:return_to]
   end
 
   def index
     @categories = current_user.categories.order(:name)
-    @return_to = params[:return_to]
   end
 
   def new
     @category = Category.new
     # カテゴリー作成後の戻り先URLを保持する（items/new または items/:id/edit）
-    @return_to = params[:return_to]
   end
 
   def create
@@ -27,7 +25,7 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to build_return_url(@category), success: t("categories.create.success")
     else
-      @return_to = params[:return_to]
+      @return_to = params[:return_to] if valid_return_to?(params[:return_to])
       flash.now[:error] = t("categories.create.error")
       render :new, status: :unprocessable_entity
     end
@@ -65,9 +63,13 @@ class CategoriesController < ApplicationController
     return false if url.blank?
 
     uri = URI.parse(url)
-    # オープンリダイレクト対策：相対パスまたは同一ホストのURLのみ許可
-    uri.host.nil? || uri.host == request.host
+    # オープンリダイレクト・XSS対策：同一ホストのURL、または相対パスのみ許可
+    ((uri.scheme == "https" || uri.scheme == "http") && uri.host == request.host) || uri.scheme.nil?
   rescue URI::InvalidURIError
     false
+  end
+
+  def set_return_to
+    @return_to = params[:return_to] if valid_return_to?(params[:return_to])
   end
 end

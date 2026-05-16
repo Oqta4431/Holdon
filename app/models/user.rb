@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 20 }
 
-  def self.basic_action(auth)
+  def self.find_or_create_from_omniauth(auth)
     if auth.present?
       prof = User.find_or_initialize_by(provider: auth["provider"], uid: auth["uid"])
       if prof.new_record?

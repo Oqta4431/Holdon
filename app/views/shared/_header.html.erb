@@ -13,6 +13,7 @@
           <%= button_to "ログアウト",
                 destroy_user_session_path,
                 method: :delete,
+                data: { turbo: false },
                 class: "btn btn-sm btn-outline border-primary-content/60 text-primary-content" %>
         <% else %>
           <%= link_to "ログイン",

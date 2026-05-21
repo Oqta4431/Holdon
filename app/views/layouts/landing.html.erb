@@ -47,32 +47,53 @@
 
 
           <!-- ヘッダーはここにpartialで入れる-->
-          <%= render "shared/header" %>
+          <header class="bg-primary/75 backdrop-blur-md border-b border-primary/40 sticky top-0 z-50">
+            <div class="mx-auto w-full max-w-md px-4 py-4">
+              <div class="flex items-center justify-between">
 
-          <main class="flex-1 overflow-y-auto px-4 pb-28">
+                <!-- 左：ロゴ -->
+                <%= link_to root_path, class: "text-3xl font-extrabold text-primary-content" do %>
+                  Holdon
+                <% end %>
 
-            <!-- フラッシュメッセージはここにpartialで入れる -->
-            <% flash.each do |msg_type, msg| %>
-              <% daisy_type =
-                case msg_type.to_sym
-                when :notice, :success then "success"
-                when :alert,  :error   then "error"
-                when :warning          then "warning"
-                when :info             then "info"
-                else "info"
-                end
-              %>
-              <div class="alert alert-<%= daisy_type %> mb-3">
-                <%= msg %>
+                  <!-- ハンバーガーメニュー -->
+                  <label for="hamburger" class="btn btn-ghost btn-square text-primary-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                  </label>
               </div>
-            <% end %>
+              <p class="mt-1 text-xs text-primary-content/70">物欲をコントロールしましょう</p>
+            </div>
+          </header>
+
+
+          <!-- フラッシュメッセージは main の外に flex item として配置 -->
+          <% if flash.any? %>
+            <div class="px-4 pt-2 shrink-0">
+              <% flash.each do |msg_type, msg| %>
+                <% daisy_type =
+                  case msg_type.to_sym
+                  when :notice, :success then "success"
+                  when :alert,  :error   then "error"
+                  when :warning          then "warning"
+                  when :info             then "info"
+                  else "info"
+                  end
+                %>
+                <div class="alert alert-<%= daisy_type %> mb-2">
+                  <%= msg %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <main class="flex-1 <%= content_for?(:main_class) ? yield(:main_class) : 'overflow-hidden' %>">
 
             <%= yield %>
 
           </main>
 
-          <!-- フッターはここにpartialで入れる -->
-          <%= render "shared/footer" %>
         </div>
         <div class="drawer-side z-50">
           <label for="hamburger" aria-label="close sidebar" class="drawer-overlay"></label>

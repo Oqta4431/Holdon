@@ -3,7 +3,7 @@
     <nav class="relative grid grid-cols-5 items-center py-6">
 
       <!-- ホーム -->
-      <%= link_to root_path, class: "grid place-items-center #{current_page?(root_path) ? 'text-primary-content' : 'text-primary-content/50 hover:text-primary-content/80'}" do %>
+      <%= link_to home_path, class: "grid place-items-center #{current_page?(home_path) ? 'text-primary-content' : 'text-primary-content/50 hover:text-primary-content/80'}" do %>
         <span class="sr-only">ホーム</span>
         <!-- home svg -->
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">

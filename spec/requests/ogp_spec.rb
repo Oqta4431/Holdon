@@ -2,10 +2,6 @@ require "rails_helper"
 
 RSpec.describe "OGP", type: :request do
   describe "GET /" do
-    let(:user) { create(:user) }
-
-    before { sign_in user }
-
     it "OGPメタタグが正しく出力される" do
       get root_path
 

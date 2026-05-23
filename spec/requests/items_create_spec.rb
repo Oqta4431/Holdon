@@ -47,7 +47,7 @@ RSpec.describe "Items create", type: :request do
     context "異常系" do
       it "name なしでは作成されない" do
         expect do
-          post items_path, params: { item: { name: "", price: 120_000 } }
+          post items_path, params: { item: { name: "", price: 120_000, remind_interval: 3600 } }
         end.not_to change(Item, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
@@ -57,7 +57,7 @@ RSpec.describe "Items create", type: :request do
 
       it "price なしでは作成されない" do
         expect do
-          post items_path, params: { item: { name: "iPad", price: nil } }
+          post items_path, params: { item: { name: "iPad", price: nil, remind_interval: 3600 } }
         end.not_to change(Item, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)

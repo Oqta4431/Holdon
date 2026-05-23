@@ -1,7 +1,8 @@
 class Reminder < ApplicationRecord
   # リマインド間隔の上下限（秒単位）
-  # 下限：1分 / 上限：60日 / デフォルト：24時間
-  REMIND_INTERVAL_MIN = 60          # 1分
+  # 下限：15分 / 上限：60日 / デフォルト：24時間
+  # neonの無料プランのコンピュート時間クォータ超過を防ぐため1分から15分に引き上げ
+  REMIND_INTERVAL_MIN = 900         # 15分
   REMIND_INTERVAL_MAX = 5_184_000   # 60日
   DEFAULT_REMIND_INTERVAL = 86_400  # 24時間
 

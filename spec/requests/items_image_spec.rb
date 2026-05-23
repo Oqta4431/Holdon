@@ -40,7 +40,8 @@ RSpec.describe "Items image attachment", type: :request do
         post items_path, params: {
           item: {
             name: "画像なし商品",
-            price: 8_000
+            price: 8_000,
+            remind_interval: 3600
           }
         }
       end.to change(Item, :count).by(1)

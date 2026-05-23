@@ -8,11 +8,11 @@ RSpec.describe "Judgements update", type: :request do
 
   let(:item) { create(:item, user: user) }
   let!(:judgement) { Judgement.create!(item: item, purchase_status: :considering, decided_at: nil) }
-  let!(:reminder) { Reminder.create!(item: item, remind_at: 1.hour.from_now, remind_interval: 60) }
+  let!(:reminder) { Reminder.create!(item: item, remind_at: 1.hour.from_now, remind_interval: 3600) }
 
   let(:other_item) { create(:item, user: other_user) }
   let!(:other_judgement) { Judgement.create!(item: other_item, purchase_status: :considering, decided_at: nil) }
-  let!(:other_reminder) { Reminder.create!(item: other_item, remind_at: 1.hour.from_now, remind_interval: 60) }
+  let!(:other_reminder) { Reminder.create!(item: other_item, remind_at: 1.hour.from_now, remind_interval: 3600) }
 
   describe "未ログイン" do
     it "PATCH /items/:item_id/judgement は拒否される" do

@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    attributes:
+      reminder:
+        remind_interval: リマインド間隔
+    errors:
+      models:
+        reminder:
+          attributes:
+            remind_interval:
+              greater_than_or_equal_to: は15分以上で設定してください
+              less_than_or_equal_to: は60日以内で設定してください

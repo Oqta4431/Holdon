@@ -57,7 +57,8 @@ class ItemsController < ApplicationController
       @item.reminder.update!(remind_at: @item.created_at + remind_interval.seconds)
       redirect_to items_path, success: t("items.create.success")
     else
-      flash.now[:error] = t("items.create.error")
+      reminder_errors = @item.reminder&.errors&.full_messages || []
+      flash.now[:error] = reminder_errors.any? ? reminder_errors.join("、") : t("items.create.error")
       render :new, status: :unprocessable_entity
     end
   end

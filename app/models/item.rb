@@ -36,6 +36,7 @@ class Item < ApplicationRecord
 
   has_one :judgement, dependent: :destroy
   has_one :reminder, dependent: :destroy
+  validates_associated :reminder
   has_one :reason, dependent: :destroy
   has_one :review, dependent: :destroy
 

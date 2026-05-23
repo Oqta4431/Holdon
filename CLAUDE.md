@@ -222,6 +222,26 @@ docs/diary/{日付}_pr{番号}_{ブランチ名}.md
 
 - 各項目は全て箇条書きで記載する
 - `git log` や `git diff main` で変更内容を把握してから作成する
+- 出力はコピペしやすいよう必ず ` ```markdown ``` ` ブロックで囲む
+- ブロック内のファイル名・メソッド名・スコープ名などは `` ` `` で囲む（GitHub上でコードとしてハイライトされるため）
+（出力例）
+## 概要
+- `ready_for_review` スコープの定義を「先週1週間」の時間制限なしに変更し、振り返り待ちアイテムを全件取得するよう修正した
+
+## 修正内容
+- 既存の `ready_for_review`（先週の日付範囲でフィルタリング）を `last_week_reviews` にリネームしてコメントアウト
+- `ready_for_review` を新たに定義し直し、条件を「`purchased` か `skipped`」「`decided_at` が nil でない」「レビューレコードが存在しない」の3つに絞った
+
+## 影響範囲
+- `app/models/item.rb`
+- `HomeController#index` で `ready_for_review` を呼んでいるが、スコープ名は変わらないため変更不要
+
+## レビュー観点
+- 新しい `ready_for_review` の3条件が要件と一致しているか
+- `last_week_reviews` のロジックが壊れていないか（コメントアウトのみで内容に変更なし）
+
+## 補足
+- `last_week_reviews` は将来の週次レビュー機能などで再利用できる可能性があるためコードとして保持
 
 ---
 

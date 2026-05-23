@@ -47,25 +47,35 @@ class Item < ApplicationRecord
     .where("reminders.remind_at <= ?", Time.current)
   }
 
-  # 判断レビュー対象の絞り込み
+  # 先週の判断レビュー対象の絞り込み、何かに使えそうなので残しておく
+  # scope :last_week_reviews, -> {
+  #   ## last_week_start : 日曜日の00:00
+  #   ## last_week_end   : 土曜日の23:59(日曜の00:00)
+  #   today_jst = Time.current.in_time_zone("Tokyo")
+  #   last_week_end = today_jst.beginning_of_day - today_jst.wday.days
+  #   last_week_start = last_week_end - 7.days
+
+  #   ## ① purchased か skipped の全件
+  #   ## ② 日曜 00:00 ~ 土曜 23:59 の間
+  #   ## ③ 購入判断がされている（異常系への対処、purchased, skipped だが decided_at: nil があり得るかもしれない）
+  #   ## ④ left_outer_join の結果、reviews.id: nil
+
+  #   includes(:judgement)
+  #   .joins(:judgement)
+  #   .left_outer_joins(:review)
+  #   .where(judgements: { purchase_status: [ Judgement.purchase_statuses[:purchased], Judgement.purchase_statuses[:skipped] ] })
+  #   .where("judgements.decided_at >= ?", last_week_start)
+  #   .where("judgements.decided_at < ?", last_week_end)
+  #   .where.not(judgements: { decided_at: nil })
+  #   .where(reviews: { id: nil })
+  # }
+
+  # 未レビューの商品一覧
   scope :ready_for_review, -> {
-    ## last_week_start : 日曜日の00:00
-    ## last_week_end   : 土曜日の23:59(日曜の00:00)
-    today_jst = Time.current.in_time_zone("Tokyo")
-    last_week_end = today_jst.beginning_of_day - today_jst.wday.days
-    last_week_start = last_week_end - 7.days
-
-    ## ① purchased か skipped の全件
-    ## ② 日曜 00:00 ~ 土曜 23:59 の間
-    ## ③ 購入判断がされている（異常系への対処、purchased, skipped だが decided_at: nil があり得るかもしれない）
-    ## ④ left_outer_join の結果、reviews.id: nil
-
     includes(:judgement)
     .joins(:judgement)
     .left_outer_joins(:review)
     .where(judgements: { purchase_status: [ Judgement.purchase_statuses[:purchased], Judgement.purchase_statuses[:skipped] ] })
-    .where("judgements.decided_at >= ?", last_week_start)
-    .where("judgements.decided_at < ?", last_week_end)
     .where.not(judgements: { decided_at: nil })
     .where(reviews: { id: nil })
   }

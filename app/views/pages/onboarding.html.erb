@@ -2,16 +2,20 @@
   <div class="swiper w-full h-full">
     <div class="swiper-wrapper">
 
-      <%# STEP 01 %>
+      <%# Slide 0: キャッチ %>
+      <div class="swiper-slide">
+        <div class="h-full flex flex-col items-center justify-center px-6 gap-6 pb-16">
+          <div class="text-5xl font-extrabold text-primary tracking-tight">Holdon</div>
+          <p class="text-center text-base text-base-content/70 leading-relaxed">衝動買いを、立ち止まって<br>考える習慣を。</p>
+        </div>
+      </div>
+
+      <%# Slide 1: STEP 01 %>
       <div class="swiper-slide">
         <div class="h-full flex flex-col px-5 pt-4 pb-16">
           <div class="flex-1 flex items-center justify-center min-h-0">
-            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
-                </svg>
-              </div>
+            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm overflow-hidden">
+              <%= image_tag "onboarding/Step1.png", class: "w-full h-full object-contain", alt: "商品登録画面" %>
             </div>
           </div>
           <div class="mt-4 text-center">
@@ -22,36 +26,28 @@
         </div>
       </div>
 
-      <%# STEP 02 %>
+      <%# Slide 2: STEP 02 %>
       <div class="swiper-slide">
         <div class="h-full flex flex-col px-5 pt-4 pb-16">
           <div class="flex-1 flex items-center justify-center min-h-0">
-            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
+            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm overflow-hidden">
+              <%= image_tag "onboarding/Step2.png", class: "w-full h-full object-contain", alt: "理由メモ画面" %>
             </div>
           </div>
           <div class="mt-4 text-center">
             <span class="badge badge-primary font-bold tracking-widest text-xs px-3">STEP 02</span>
-            <h3 class="font-bold text-base mt-2 mb-1">時間をおく</h3>
-            <p class="text-xs text-base-content/60 leading-relaxed">24時間が冷却期間。衝動的な気持ちが落ち着くのを待ちます。リマインドが届いたら判断の時間です。</p>
+            <h3 class="font-bold text-base mt-2 mb-1">理由を整理する</h3>
+            <p class="text-xs text-base-content/60 leading-relaxed">買う理由・買わない理由を書き出してみよう。冷静に考えるきっかけになります。</p>
           </div>
         </div>
       </div>
 
-      <%# STEP 03 %>
+      <%# Slide 3: STEP 03 %>
       <div class="swiper-slide">
         <div class="h-full flex flex-col px-5 pt-4 pb-16">
           <div class="flex-1 flex items-center justify-center min-h-0">
-            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48 48 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0q1.515.215 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a6 6 0 01-2.031.352 6 6 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202zm-16.5.52q1.485-.305 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a6 6 0 01-2.031.352 6 6 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202z" />
-                </svg>
-              </div>
+            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm overflow-hidden">
+              <%= image_tag "onboarding/Step3.png", class: "w-full h-full object-contain", alt: "購入判断画面" %>
             </div>
           </div>
           <div class="mt-4 text-center">
@@ -62,16 +58,12 @@
         </div>
       </div>
 
-      <%# STEP 04 %>
+      <%# Slide 4: STEP 04 %>
       <div class="swiper-slide">
         <div class="h-full flex flex-col px-5 pt-4 pb-16">
           <div class="flex-1 flex items-center justify-center min-h-0">
-            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
+            <div class="w-full h-full rounded-2xl bg-base-100 shadow-sm overflow-hidden">
+              <%= image_tag "onboarding/Step4.png", class: "w-full h-full object-contain", alt: "振り返り画面" %>
             </div>
           </div>
           <div class="mt-4 text-center">
@@ -82,15 +74,31 @@
         </div>
       </div>
 
-      <%# LINE ログイン %>
-      <div class="swiper-slide">
-        <div class="h-full flex flex-col items-center justify-center px-6 gap-8 pb-16">
-          <div class="text-4xl font-extrabold text-primary tracking-tight">Holdon</div>
+      <%# Slide 5: CTA %>
+      <div class="swiper-slide" data-turbo="false">
+        <div class="h-full flex flex-col justify-center px-6 gap-6 pb-16">
           <div class="text-center">
-            <h3 class="font-bold text-lg mb-2">さっそく始めましょう</h3>
-            <p class="text-sm text-base-content/60">衝動買いを、立ち止まって考える習慣を。</p>
+            <h2 class="font-bold text-lg mb-2">判断のタイミングをお知らせします</h2>
+            <p class="text-sm text-base-content/60 leading-relaxed">登録した商品の判断時間になったら<br>LINEで通知が届きます。</p>
           </div>
-          <%= render "devise/shared/links" %>
+
+          <div class="flex flex-col items-center gap-3">
+            <span class="badge badge-primary font-bold tracking-widest text-xs px-3">STEP 1</span>
+            <div class="flex justify-center w-full">
+              <div class="line-it-button" data-lang="ja" data-type="friend" data-env="PROD" data-lineId="@559mmzug" style="display: none;"></div>
+            </div>
+            <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer" data-turbo-eval="false"></script>
+          </div>
+
+          <div class="divider my-0"></div>
+
+          <div class="flex flex-col items-center gap-3">
+            <span class="badge badge-primary font-bold tracking-widest text-xs px-3">STEP 2</span>
+            <p class="text-sm font-medium">さっそく始めましょう</p>
+            <div class="w-44 [&_form]:w-full [&_button]:w-full [&_img]:w-full">
+              <%= render "devise/shared/links" %>
+            </div>
+          </div>
         </div>
       </div>
 

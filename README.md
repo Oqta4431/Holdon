@@ -54,6 +54,7 @@ Holdonでは購入の判断を遅らせることによって時間を取り、�
 【実装予定の機能】
 - URL自動抽出による商品情報取得（Amazon PA-API / 楽天API）
 - カレンダービューでの振り返り
+- 各種SNSでの共有機能（X, instagramなど）
 
 
 ## 使用する技術スタック
@@ -71,4 +72,4 @@ Holdonでは購入の判断を遅らせることによって時間を取り、�
 )
 
 ## ER図
-<img width="948" height="817" alt="image" src="https://github.com/user-attachments/assets/293caf01-48ba-429c-8708-9d55e8214c41" />
+[![Image from Gyazo](https://i.gyazo.com/c97e486abb93dec763f013c276bc9449.png)](https://gyazo.com/c97e486abb93dec763f013c276bc9449)

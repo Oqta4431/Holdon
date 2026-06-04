@@ -113,7 +113,7 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    bootsnap (1.19.0)
+    bootsnap (1.24.6)
       msgpack (~> 1.2)
     brakeman (7.1.1)
       racc
@@ -211,7 +211,7 @@ GEM
       logger
     mini_mime (1.1.5)
     minitest (5.26.2)
-    msgpack (1.8.0)
+    msgpack (1.8.1)
     multi_xml (0.8.1)
       bigdecimal (>= 3.1, < 5)
     multipart-post (2.4.1)
